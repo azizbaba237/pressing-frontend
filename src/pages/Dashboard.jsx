@@ -46,7 +46,9 @@ const Dashboard = () => {
   if (loading) {
     return (
       <MainLayout>
-        <Loader text="Chargement des statistiques..." />
+        <div className="flex justify-center items-center min-h-screen">
+          <Loader text="Chargement des statistiques..." />
+        </div>
       </MainLayout>
     );
   }
@@ -55,28 +57,28 @@ const Dashboard = () => {
     {
       title: "Total Commandes",
       value: stats?.total_orders || 0,
-      icon: <FaShoppingCart className="text-4xl" />,
+      icon: <FaShoppingCart className="text-2xl sm:text-3xl md:text-4xl" />,
       color: "bg-blue-500",
       textColor: "text-blue-600",
     },
     {
       title: "Commandes Aujourd'hui",
       value: stats?.orders_today || 0,
-      icon: <FaClock className="text-4xl" />,
+      icon: <FaClock className="text-2xl sm:text-3xl md:text-4xl" />,
       color: "bg-green-500",
       textColor: "text-green-600",
     },
     {
       title: "CA 30 derniers jours",
       value: `${(stats?.orders_last_30_days || 0).toLocaleString()} FCFA`,
-      icon: <FaMoneyBillWave className="text-4xl" />,
+      icon: <FaMoneyBillWave className="text-2xl sm:text-3xl md:text-4xl" />,
       color: "bg-yellow-500",
       textColor: "text-yellow-600",
     },
     {
       title: "Montants en attente",
       value: `${(stats?.pending_amount || 0).toLocaleString()} FCFA`,
-      icon: <FaClock className="text-4xl" />,
+      icon: <FaClock className="text-2xl sm:text-3xl md:text-4xl" />,
       color: "bg-red-500",
       textColor: "text-red-600",
     },
@@ -94,29 +96,38 @@ const Dashboard = () => {
 
   return (
     <MainLayout>
-      <div className="space-y-6">
+      <div className="space-y-4 sm:space-y-6 p-2 sm:p-0">
         {/* En-tête */}
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">Tableau de bord</h1>
-          <p className="mt-2 text-gray-600">
+        <div className="px-2 sm:px-0">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
+            Tableau de bord
+          </h1>
+          <p className="mt-1 sm:mt-2 text-sm sm:text-base text-gray-600">
             Vue d'ensemble de votre activité de pressing
           </p>
         </div>
 
         {/* Cartes statistiques */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
           {statCards.map((card, index) => (
-            <div key={index} className="card hover:shadow-lg transition-shadow">
+            <div
+              key={index}
+              className="card hover:shadow-lg transition-shadow p-4 sm:p-6"
+            >
               <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600">
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs sm:text-sm font-medium text-gray-600 truncate">
                     {card.title}
                   </p>
-                  <p className={`text-2xl font-bold ${card.textColor} mt-2`}>
+                  <p
+                    className={`text-lg sm:text-xl md:text-2xl font-bold ${card.textColor} mt-1 sm:mt-2 wrap-break-word`}
+                  >
                     {card.value}
                   </p>
                 </div>
-                <div className={`${card.color} bg-opacity-10 p-4 rounded-full`}>
+                <div
+                  className={`${card.color} bg-opacity-10 p-2 sm:p-3 md:p-4 rounded-full shrink-0 ml-2`}
+                >
                   <div className={card.textColor}>{card.icon}</div>
                 </div>
               </div>
@@ -132,18 +143,16 @@ const Dashboard = () => {
               Répartition par statut
             </h3>
 
-            <div className="w-full h-[240px] sm:h-[280px] md:h-[320px]">
+            <div className="w-full h-80 sm:h-90">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <Pie
                     data={statutData}
                     cx="50%"
-                    cy="50%"
+                    cy="45%"
                     labelLine={false}
-                    label={({ name, percent }) =>
-                      `${name} ${(percent * 100).toFixed(0)}%`
-                    }
-                    outerRadius="70%"
+                    label={false}
+                    outerRadius="75%"
                     dataKey="value"
                   >
                     {statutData.map((entry, index) => (
@@ -153,7 +162,36 @@ const Dashboard = () => {
                       />
                     ))}
                   </Pie>
-                  <Tooltip />
+                  <Tooltip
+                    formatter={(value, name) => [`${value} commandes`, name]}
+                    contentStyle={{
+                      fontSize: "12px",
+                      borderRadius: "8px",
+                      border: "1px solid #e5e7eb",
+                    }}
+                  />
+                  <Legend
+                    verticalAlign="bottom"
+                    align="center"
+                    height={60}
+                    wrapperStyle={{
+                      fontSize: "12px",
+                      paddingTop: "15px",
+                    }}
+                    iconType="circle"
+                    iconSize={10}
+                    formatter={(value, entry) => {
+                      const total = statutData.reduce(
+                        (sum, item) => sum + item.value,
+                        0,
+                      );
+                      const percent = (
+                        (entry.payload.value / total) *
+                        100
+                      ).toFixed(1);
+                      return `${value}: ${entry.payload.value} (${percent}%)`;
+                    }}
+                  />
                 </PieChart>
               </ResponsiveContainer>
             </div>
@@ -165,14 +203,21 @@ const Dashboard = () => {
               Commandes par statut
             </h3>
 
-            <div className="w-full h-65 sm:h-75">
+            <div className="w-full h-70 sm:h-80 md:h-90">
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={statutData}>
+                <BarChart data={statutData} margin={{ left: -20, right: 10 }}>
                   <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="name" tick={{ fontSize: 12 }} interval={0} />
-                  <YAxis />
+                  <XAxis
+                    dataKey="name"
+                    tick={{ fontSize: 10 }}
+                    interval={0}
+                    angle={-45}
+                    textAnchor="end"
+                    height={80}
+                  />
+                  <YAxis tick={{ fontSize: 10 }} />
                   <Tooltip />
-                  <Legend />
+                  <Legend wrapperStyle={{ fontSize: "12px" }} />
                   <Bar
                     dataKey="value"
                     fill="#3B82F6"
@@ -186,11 +231,11 @@ const Dashboard = () => {
         </div>
 
         {/* Résumé des statuts avec icônes */}
-        <div className="card">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">
+        <div className="card p-4 sm:p-6">
+          <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-4">
             État des commandes
           </h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
             {stats?.orders_by_status && (
               <>
                 <StatutCard
@@ -238,12 +283,12 @@ const Dashboard = () => {
 };
 
 const StatutCard = ({ label, count, icon, color, bgColor }) => (
-  <div className={`${bgColor} rounded-lg p-4`}>
-    <div className="flex items-center space-x-3">
-      <div className={`${color} text-2xl`}>{icon}</div>
-      <div>
-        <p className="text-sm text-gray-600">{label}</p>
-        <p className={`text-2xl font-bold ${color}`}>{count}</p>
+  <div className={`${bgColor} rounded-lg p-3 sm:p-4`}>
+    <div className="flex flex-col sm:flex-row items-center sm:items-start space-y-2 sm:space-y-0 sm:space-x-3">
+      <div className={`${color} text-xl sm:text-2xl shrink-0`}>{icon}</div>
+      <div className="text-center sm:text-left">
+        <p className="text-xs sm:text-sm text-gray-600">{label}</p>
+        <p className={`text-xl sm:text-2xl font-bold ${color}`}>{count}</p>
       </div>
     </div>
   </div>
@@ -251,11 +296,11 @@ const StatutCard = ({ label, count, icon, color, bgColor }) => (
 
 const getStatutLabel = (status) => {
   const labels = {
-    PENDING: "Pending",
-    IN_PROGRESS: "In Progress",
-    READY: "Ready",
-    DELIVERED: "Delivered",
-    CANCELLED: "Cancelled",
+    PENDING: "En attente",
+    IN_PROGRESS: "En cours",
+    READY: "Prêt",
+    DELIVERED: "Livré",
+    CANCELLED: "Annulé",
   };
   return labels[status] || status;
 };

@@ -198,10 +198,11 @@ const Clients = () => {
               resetForm();
               setShowModal(true);
             }}
-            className="btn-primary flex items-center space-x-2"
+            className="btn-primary flex items-center space-x-2 text-sm md:text-base"
           >
             <FaPlus />
-            <span>Nouveau client</span>
+            <span className="hidden sm:inline">Nouveau client</span>
+            <span className="sm:hidden">Nouveau</span>
           </button>
         </div>
 
@@ -217,13 +218,13 @@ const Clients = () => {
         {/* Barre de recherche */}
         <div className="card">
           <div className="flex items-center space-x-2">
-            <FaSearch className="text-gray-400" />
+            <FaSearch className="text-gray-400 shrink-0" />
             <input
               type="text"
-              placeholder="Rechercher un client (nom, prénom, téléphone)..."
+              placeholder="Rechercher un client..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="input-field"
+              className="input-field text-sm md:text-base"
             />
           </div>
         </div>
@@ -423,7 +424,8 @@ const Clients = () => {
                         Montant en attente
                       </p>
                       <p className="text-2xl font-bold text-red-600">
-                        {(clientStats.amount_pending ?? 0 ).toLocaleString()} FCFA
+                        {(clientStats.amount_pending ?? 0).toLocaleString()}{" "}
+                        FCFA
                       </p>
                     </div>
                   </div>
