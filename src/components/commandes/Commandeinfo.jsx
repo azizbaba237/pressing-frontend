@@ -15,8 +15,8 @@ const CommandeInfo = ({ commande, getStatutBadge }) => {
       <div>
         <p className="text-sm text-gray-600">Client</p>
         <p className="font-semibold">
-          {commande.customer_detail?.first_name}{" "}
-          {commande.customer_detail?.last_name}
+          {commande.customer_details?.last_name}{" "}
+          {commande.customer_details?.first_name}
         </p>
         <p className="text-sm text-gray-500">
           {commande.customer_detail?.phone}

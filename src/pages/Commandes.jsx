@@ -12,8 +12,8 @@ import CommandesStats from "../components/commandes/CommandesStats";
 import CommandesTable from "../components/commandes/CommandesTable";
 import CommandeFormModal from "../components/commandes/CommandeFormModal";
 import CommandeDetailModal from "../components/commandes/CommandeDetailModal";
-import PaiementModal from "../components/commandes/PaiementModal";
 import { STATUT_CHOICES, MODE_PAIEMENT_CHOICES } from "../constants/commandes";
+import PaiementModal from "../components/commandes/Paiementmodal";
 
 const Commandes = () => {
   // États principaux
@@ -70,7 +70,7 @@ const Commandes = () => {
       const response = await commandeService.getAll(params);
       setCommandes(response.data.results || response.data);
     } catch (error) {
-      showAlert("error", "Erreur lors du chargement des commandes");
+      showAlert(error, "Erreur lors du chargement des commandes");
     } finally {
       setLoading(false);
     }
@@ -140,7 +140,7 @@ const Commandes = () => {
         showAlert("success", "Commande supprimée avec succès");
         fetchCommandes();
       } catch (error) {
-        showAlert("error", "Erreur lors de la suppression");
+        showAlert(error, "Erreur lors de la suppression");
       }
     }
   };
@@ -151,7 +151,7 @@ const Commandes = () => {
       setSelectedCommande(response.data);
       setShowDetailModal(true);
     } catch (error) {
-      showAlert("error", "Erreur lors du chargement des détails");
+      showAlert(error, "Erreur lors du chargement des détails");
     }
   };
 
@@ -168,7 +168,7 @@ const Commandes = () => {
         setSelectedCommande(response.data);
       }
     } catch (error) {
-      showAlert("error", "Erreur lors du changement de statut");
+      showAlert(error, "Erreur lors du changement de statut");
     }
   };
 
@@ -193,7 +193,7 @@ const Commandes = () => {
       const response = await commandeService.getById(selectedCommande.id);
       setSelectedCommande(response.data);
     } catch (error) {
-      showAlert("error", "Erreur lors de l'ajout du paiement");
+      showAlert(error, "Erreur lors de l'ajout du paiement");
     }
   };
 

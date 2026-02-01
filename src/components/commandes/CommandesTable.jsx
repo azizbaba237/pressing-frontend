@@ -32,8 +32,8 @@ const CommandesTable = ({ commandes, loading, onViewDetails, onDelete }) => {
       header: "Client",
       accessor: "customer",
       render: (row) =>
-        row.customer_detail
-          ? `${row.customer_detail.first_name} ${row.customer_detail.last_name}`
+        row.customer_details
+          ? `${row.customer_details.last_name} ${row.customer_details.first_name}`
           : "-",
     },
     {

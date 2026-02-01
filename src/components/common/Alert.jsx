@@ -39,14 +39,14 @@ const Alert = ({ type = "info", message, onClose }) => {
   return (
     <div className={`${style.bg} ${style.border} border rounded-lg p-4 mb-4`}>
       <div className="flex items-start">
-        <div className="flex-shrink-0">{style.icon}</div>
+        <div className="shrink-0">{style.icon}</div>
         <div className={`ml-3 flex-1 ${style.text}`}>
           <p className="text-sm">{message}</p>
         </div>
         {onClose && (
           <button
             onClick={onClose}
-            className={`ml-3 flex-shrink-0 ${style.text} hover:opacity-75`}
+            className={`ml-3 shrink-0 ${style.text} hover:opacity-75`}
           >
             <FaTimes />
           </button>
