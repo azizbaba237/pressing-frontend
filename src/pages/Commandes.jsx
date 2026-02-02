@@ -11,7 +11,7 @@ import CommandesFilters from "../components/commandes/CommandesFilters";
 import CommandesStats from "../components/commandes/CommandesStats";
 import CommandesTable from "../components/commandes/CommandesTable";
 import CommandeFormModal from "../components/commandes/CommandeFormModal";
-import CommandeDetailModal from "../components/commandes/CommandeDetailModal";
+import CommandeDetailModal from "../components/commandes/Commandedetailmodal";
 import { STATUT_CHOICES, MODE_PAIEMENT_CHOICES } from "../constants/commandes";
 import PaiementModal from "../components/commandes/Paiementmodal";
 
