@@ -2,8 +2,8 @@ import React from "react";
 import Modal from "../common/Modal";
 import { FaMoneyBillWave } from "react-icons/fa";
 import { STATUT_CHOICES, STATUT_COLORS } from "../../constants/commandes";
-import CommandeInfo from "./CommandeInfo";
-import CommandeItems from "./CommandeItems";
+import CommandeInfo from "./Commandeinfo";
+import CommandeItems from "./Commandeitems";
 import CommandeFinancial from "./Commandefinancial";
 import CommandePayments from "./Commandepayments";
 
