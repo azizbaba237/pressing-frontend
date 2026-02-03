@@ -94,6 +94,9 @@ const Dashboard = () => {
 
   const COLORS = ["#3B82F6", "#10B981", "#F59E0B", "#EF4444", "#8B5CF6"];
 
+  // Vérifier si nous avons des données pour afficher les graphiques
+  const hasChartData = statutData && statutData.length > 0;
+
   return (
     <MainLayout>
       <div className="space-y-4 sm:space-y-6 p-2 sm:p-0">
@@ -135,100 +138,108 @@ const Dashboard = () => {
           ))}
         </div>
 
-        {/* Graphiques */}
-        <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 sm:gap-6">
-          {/* Graphique des statuts - Pie Chart */}
-          <div className="card p-4 sm:p-6">
-            <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-4 text-center sm:text-left">
-              Répartition par statut
-            </h3>
+        {/* Graphiques - Afficher seulement si nous avons des données */}
+        {hasChartData ? (
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 sm:gap-6">
+            {/* Graphique des statuts - Pie Chart */}
+            <div className="card p-4 sm:p-6">
+              <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-4 text-center sm:text-left">
+                Répartition par statut
+              </h3>
 
-            <div className="w-full h-80 sm:h-90">
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Pie
-                    data={statutData}
-                    cx="50%"
-                    cy="45%"
-                    labelLine={false}
-                    label={false}
-                    outerRadius="75%"
-                    dataKey="value"
-                  >
-                    {statutData.map((entry, index) => (
-                      <Cell
-                        key={`cell-${index}`}
-                        fill={COLORS[index % COLORS.length]}
-                      />
-                    ))}
-                  </Pie>
-                  <Tooltip
-                    formatter={(value, name) => [`${value} commandes`, name]}
-                    contentStyle={{
-                      fontSize: "12px",
-                      borderRadius: "8px",
-                      border: "1px solid #e5e7eb",
-                    }}
-                  />
-                  <Legend
-                    verticalAlign="bottom"
-                    align="center"
-                    height={60}
-                    wrapperStyle={{
-                      fontSize: "12px",
-                      paddingTop: "15px",
-                    }}
-                    iconType="circle"
-                    iconSize={10}
-                    formatter={(value, entry) => {
-                      const total = statutData.reduce(
-                        (sum, item) => sum + item.value,
-                        0,
-                      );
-                      const percent = (
-                        (entry.payload.value / total) *
-                        100
-                      ).toFixed(1);
-                      return `${value}: ${entry.payload.value} (${percent}%)`;
-                    }}
-                  />
-                </PieChart>
-              </ResponsiveContainer>
+              <div className="w-full" style={{ height: "320px" }}>
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie
+                      data={statutData}
+                      cx="50%"
+                      cy="45%"
+                      labelLine={false}
+                      label={false}
+                      outerRadius="75%"
+                      dataKey="value"
+                    >
+                      {statutData.map((entry, index) => (
+                        <Cell
+                          key={`cell-${index}`}
+                          fill={COLORS[index % COLORS.length]}
+                        />
+                      ))}
+                    </Pie>
+                    <Tooltip
+                      formatter={(value, name) => [`${value} commandes`, name]}
+                      contentStyle={{
+                        fontSize: "12px",
+                        borderRadius: "8px",
+                        border: "1px solid #e5e7eb",
+                      }}
+                    />
+                    <Legend
+                      verticalAlign="bottom"
+                      align="center"
+                      height={60}
+                      wrapperStyle={{
+                        fontSize: "12px",
+                        paddingTop: "15px",
+                      }}
+                      iconType="circle"
+                      iconSize={10}
+                      formatter={(value, entry) => {
+                        const total = statutData.reduce(
+                          (sum, item) => sum + item.value,
+                          0,
+                        );
+                        const percent = (
+                          (entry.payload.value / total) *
+                          100
+                        ).toFixed(1);
+                        return `${value}: ${entry.payload.value} (${percent}%)`;
+                      }}
+                    />
+                  </PieChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+
+            {/* Graphique en barres - Commandes par statut */}
+            <div className="card p-4 sm:p-6">
+              <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-4 text-center sm:text-left">
+                Commandes par statut
+              </h3>
+
+              <div className="w-full" style={{ height: "320px" }}>
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={statutData} margin={{ left: -20, right: 10 }}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis
+                      dataKey="name"
+                      tick={{ fontSize: 10 }}
+                      interval={0}
+                      angle={-45}
+                      textAnchor="end"
+                      height={80}
+                    />
+                    <YAxis tick={{ fontSize: 10 }} />
+                    <Tooltip />
+                    <Legend wrapperStyle={{ fontSize: "12px" }} />
+                    <Bar
+                      dataKey="value"
+                      fill="#3B82F6"
+                      name="Nombre de commandes"
+                      radius={[6, 6, 0, 0]}
+                    />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
             </div>
           </div>
-
-          {/* Graphique en barres - Commandes par statut */}
-          <div className="card p-4 sm:p-6">
-            <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-4 text-center sm:text-left">
-              Commandes par statut
-            </h3>
-
-            <div className="w-full h-70 sm:h-80 md:h-90">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={statutData} margin={{ left: -20, right: 10 }}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis
-                    dataKey="name"
-                    tick={{ fontSize: 10 }}
-                    interval={0}
-                    angle={-45}
-                    textAnchor="end"
-                    height={80}
-                  />
-                  <YAxis tick={{ fontSize: 10 }} />
-                  <Tooltip />
-                  <Legend wrapperStyle={{ fontSize: "12px" }} />
-                  <Bar
-                    dataKey="value"
-                    fill="#3B82F6"
-                    name="Nombre de commandes"
-                    radius={[6, 6, 0, 0]}
-                  />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
+        ) : (
+          <div className="card p-6 text-center">
+            <p className="text-gray-500">
+              Aucune donnée disponible pour les graphiques
+            </p>
           </div>
-        </div>
+        )}
 
         {/* Résumé des statuts avec icônes */}
         <div className="card p-4 sm:p-6">

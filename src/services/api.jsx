@@ -142,8 +142,8 @@ export const commandeService = {
   create: (data) => api.post("/api/orders/", data),
   update: (id, data) => api.put(`/api/orders/${id}/`, data),
   delete: (id) => api.delete(`/api/orders/${id}/`),
-  changerStatut: (id, statut) =>
-    api.post(`/api/orders/${id}/change_status/`, { statut }),
+  changerStatut: (id, status) =>
+    api.post(`/api/orders/${id}/change_status/`, { status }),
   ajouterPaiement: (id, data) =>
     api.post(`/api/orders/${id}/add_payment/`, data),
   getStatistiques: () => api.get("/api/orders/statistics/"),
