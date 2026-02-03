@@ -2,7 +2,6 @@ import axios from "axios";
 
 // URL de l'API
 const API_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000/api';
-//const API_URL = process.env.REACT_APP_API_URL;
 
 // Instance Axios
 const api = axios.create({
@@ -109,52 +108,52 @@ export const authService = {
 
 // Service Clients
 export const clientService = {
-  getAll: (params) => api.get("/customers/", { params }),
-  getById: (id) => api.get(`/customers/${id}/`),
-  create: (data) => api.post("/customers/", data),
-  update: (id, data) => api.put(`/customers/${id}/`, data),
-  delete: (id) => api.delete(`/customers/${id}/`),
-  getCommandes: (id) => api.get(`/customers/${id}/orders/`),
-  getStatistiques: (id) => api.get(`/customers/${id}/statistics/`),
+  getAll: (params) => api.get("/api/customers/", { params }),
+  getById: (id) => api.get(`/api/customers/${id}/`),
+  create: (data) => api.post("/api/customers/", data),
+  update: (id, data) => api.put(`/api/customers/${id}/`, data),
+  delete: (id) => api.delete(`/api/customers/${id}/`),
+  getCommandes: (id) => api.get(`/api/customers/${id}/orders/`),
+  getStatistiques: (id) => api.get(`/api/customers/${id}/statistics/`),
 };
 
 // Service Catégories
 export const categorieService = {
-  getAll: (params) => api.get("/categories/", { params }),
-  getById: (id) => api.get(`/categories/${id}/`),
-  create: (data) => api.post("/categories/", data),
-  update: (id, data) => api.put(`/categories/${id}/`, data),
-  delete: (id) => api.delete(`/categories/${id}/`),
+  getAll: (params) => api.get("/api/categories/", { params }),
+  getById: (id) => api.get(`/api/categories/${id}/`),
+  create: (data) => api.post("/api/categories/", data),
+  update: (id, data) => api.put(`/api/categories/${id}/`, data),
+  delete: (id) => api.delete(`/api/categories/${id}/`),
 };
 
 // Service Services
 export const serviceService = {
-  getAll: (params) => api.get("/services/", { params }),
-  getById: (id) => api.get(`/services/${id}/`),
-  create: (data) => api.post("/services/", data),
-  update: (id, data) => api.put(`/services/${id}/`, data),
-  delete: (id) => api.delete(`/services/${id}/`),
+  getAll: (params) => api.get("/api/services/", { params }),
+  getById: (id) => api.get(`/api/services/${id}/`),
+  create: (data) => api.post("/api/services/", data),
+  update: (id, data) => api.put(`/api/services/${id}/`, data),
+  delete: (id) => api.delete(`/api/services/${id}/`),
 };
 
 // Service Commandes
 export const commandeService = {
-  getAll: (params) => api.get("/orders/", { params }),
-  getById: (id) => api.get(`/orders/${id}/`),
-  create: (data) => api.post("/orders/", data),
-  update: (id, data) => api.put(`/orders/${id}/`, data),
-  delete: (id) => api.delete(`/orders/${id}/`),
+  getAll: (params) => api.get("/api/orders/", { params }),
+  getById: (id) => api.get(`/api/orders/${id}/`),
+  create: (data) => api.post("/api/orders/", data),
+  update: (id, data) => api.put(`/api/orders/${id}/`, data),
+  delete: (id) => api.delete(`/api/orders/${id}/`),
   changerStatut: (id, statut) =>
-    api.post(`/orders/${id}/change_status/`, { statut }),
+    api.post(`/api/orders/${id}/change_status/`, { statut }),
   ajouterPaiement: (id, data) =>
-    api.post(`/orders/${id}/add_payment/`, data),
-  getStatistiques: () => api.get("/orders/statistics/"),
+    api.post(`/api/orders/${id}/add_payment/`, data),
+  getStatistiques: () => api.get("/api/orders/statistics/"),
 };
 
 // Service Paiements
 export const paiementService = {
-  getAll: (params) => api.get("/payments/", { params }),
-  getById: (id) => api.get(`/payments/${id}/`),
-  create: (data) => api.post("/payments/", data),
+  getAll: (params) => api.get("/api/payments/", { params }),
+  getById: (id) => api.get(`/api/payments/${id}/`),
+  create: (data) => api.post("/api/payments/", data),
 };
 
 export default api;
