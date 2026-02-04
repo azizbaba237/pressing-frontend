@@ -34,7 +34,7 @@ const Alert = ({ type = "info", message, onClose }) => {
     },
   };
 
-  const style = types[type];
+  const style = types[type] || types.info;
 
   return (
     <div className={`${style.bg} ${style.border} border rounded-lg p-4 mb-4`}>

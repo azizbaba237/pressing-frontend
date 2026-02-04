@@ -328,7 +328,10 @@ const Commandes = () => {
           statutChoices={STATUT_CHOICES}
           modePaiementChoices={MODE_PAIEMENT_CHOICES}
           onChangerStatut={handleChangerStatut}
-          onOpenPaiement={() => setShowPaiementModal(true)}
+          onOpenPaiement={() => {
+            setShowDetailModal(false);
+            setShowPaiementModal(true);
+          }}
         />
 
         {/* Modal Ajouter Paiement */}

@@ -64,6 +64,7 @@ const CommandeDetailModal = ({
         {/* Actions */}
         <div className="flex flex-wrap gap-3 pt-4 border-t">
           <button
+            type="button"
             onClick={onOpenPaiement}
             className="btn-primary flex items-center space-x-2"
             disabled={commande.is_paid}

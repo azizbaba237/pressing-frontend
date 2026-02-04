@@ -101,7 +101,8 @@ const PaiementModal = ({
               })
             }
             className="input-field"
-            placeholder="Numéro de transaction, chèque..."
+            placeholder="Référence automatique"
+            readOnly
           />
         </div>
 

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // URL de l'API
-const API_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000';
+const API_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
 
 // Instance Axios
 const api = axios.create({
@@ -22,7 +22,7 @@ api.interceptors.request.use(
   },
   (error) => {
     return Promise.reject(error);
-  }
+  },
 );
 
 // Intercepteur pour gérer le refresh token
@@ -40,7 +40,7 @@ api.interceptors.response.use(
           `${API_URL.replace("/api", "")}/api/token/refresh/`,
           {
             refresh: refreshToken,
-          }
+          },
         );
 
         const { access } = response.data;
@@ -57,7 +57,7 @@ api.interceptors.response.use(
     }
 
     return Promise.reject(error);
-  }
+  },
 );
 
 // Service d'authentification
@@ -68,7 +68,7 @@ export const authService = {
       {
         username,
         password,
-      }
+      },
     );
     const { access, refresh } = response.data;
     localStorage.setItem("access_token", access);
@@ -97,7 +97,7 @@ export const authService = {
           .map(function (c) {
             return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
           })
-          .join("")
+          .join(""),
       );
       return JSON.parse(jsonPayload);
     } catch (error) {
