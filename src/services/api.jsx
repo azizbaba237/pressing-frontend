@@ -101,6 +101,7 @@ export const authService = {
       );
       return JSON.parse(jsonPayload);
     } catch (error) {
+      console.error("Erreur lors du chargement :", error);
       return null;
     }
   },

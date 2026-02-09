@@ -15,7 +15,7 @@ export const useServicesData = ({ searchTerm, filterCategorie, showAlert }) => {
       const response = await serviceService.getAll(params);
       setServices(response.data.results || response.data);
     } catch (error) {
-      showAlert("error", "Erreur lors du chargement des services");
+      showAlert(error, "Erreur lors du chargement des services");
     } finally {
       setLoading(false);
     }

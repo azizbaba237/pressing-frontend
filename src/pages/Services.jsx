@@ -4,11 +4,11 @@ import MainLayout from "../components/layout/MainLayout";
 import Alert from "../components/common/Alert";
 import ServicesHeader from "../components/services/ServicesHeader";
 import ServicesFilters from "../components/services/ServicesFilters";
-import CategoriesStats from "../components/services/CategoriesStats";
+import CategoriesStats from "../components/categories/Categoriesstats";
 import ServicesTable from "../components/services/ServicesTable";
-import CategoriesTable from "../components/services/CategoriesTable";
+import CategoriesTable from "../components/categories/Categoriestable";
 import ServiceModal from "../components/services/Servicemodal";
-import CategorieModal from "../components/services/Categoriemodal";
+import CategorieModal from "../components/categories/Categoriemodal";
 import {useServicesData}  from "../hooks/useservicesdata ";
 import { useAlert } from "../hooks/usealert ";
 
@@ -53,6 +53,7 @@ const Services = () => {
       setSelectedService(null);
     } catch (error) {
       // Erreur gérée dans le hook
+      console.error("Erreur :", error);
     }
   };
 
@@ -88,6 +89,7 @@ const Services = () => {
       setSelectedCategorie(null);
     } catch (error) {
       // Erreur gérée dans le hook
+      console.error("Erreur:", error);
     }
   };
 

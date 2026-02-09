@@ -38,7 +38,7 @@ const Clients = () => {
       const data = response.data?.results ?? response.data ?? [];
       setClients(data);
     } catch (error) {
-      showAlert("error", "Erreur lors du chargement des clients");
+      showAlert(error, "Erreur lors du chargement des clients");
     } finally {
       setLoading(false);
     }
@@ -98,7 +98,7 @@ const Clients = () => {
         showAlert("success", "Client supprimé avec succès");
         fetchClients();
       } catch (error) {
-        showAlert("error", "Erreur lors de la suppression");
+        showAlert(error, "Erreur lors de la suppression");
       }
     }
   };

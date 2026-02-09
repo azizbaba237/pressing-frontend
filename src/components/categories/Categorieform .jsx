@@ -18,7 +18,7 @@ const CategorieForm = ({
           type="text"
           required
           value={formData.name}
-          onChange={(e) => onChange("nom", e.target.value)}
+          onChange={(e) => onChange("name", e.target.value)}
           className={`input-field ${errors.name ? "border-red-500" : ""}`}
           placeholder="Ex: Nettoyage à sec, Repassage, Blanchisserie..."
         />

@@ -1,6 +1,6 @@
 import React from "react";
 import { FaTag } from "react-icons/fa";
-import CategoryStatCard from "./CategoryStatCard";
+import CategoryStatCard from "./Categorystatcard";
 
 const CategoriesStats = ({ category, services, onCategoryClick }) => {
   return (

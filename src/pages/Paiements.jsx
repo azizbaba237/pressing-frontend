@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import MainLayout from "../components/layout/MainLayout";
-import { paiementService, commandeService } from "../services/api";
+import { paiementService } from "../services/api";
 import Table from "../components/common/Table";
 import Alert from "../components/common/Alert";
 import Loader from "../components/common/Loader";
@@ -14,7 +14,7 @@ import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 
 const Paiements = () => {
-  const [paiements, setPaiements] = useState([]);
+  const [payments, setPayments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterMode, setFilterMode] = useState("");
@@ -23,17 +23,17 @@ const Paiements = () => {
   const [alert, setAlert] = useState(null);
   const [stats, setStats] = useState({
     total: 0,
-    especes: 0,
-    carte: 0,
-    mobile: 0,
-    cheque: 0,
+    cash: 0,
+    card: 0,
+    mobile_money: 0,
+    check: 0,
   });
 
   const MODE_PAIEMENT_CHOICES = [
-    { value: "ESPECES", label: "Espèces", icon: "💵" },
-    { value: "CARTE", label: "Carte bancaire", icon: "💳" },
-    { value: "MOBILE", label: "Mobile money", icon: "📱" },
-    { value: "CHEQUE", label: "Chèque", icon: "📝" },
+    { value: "CASH", label: "Espèces", icon: "💵" },
+    { value: "CARD", label: "Carte bancaire", icon: "💳" },
+    { value: "MOBILE_MONEY", label: "Mobile money", icon: "📱" },
+    { value: "CHECK", label: "Chèque", icon: "📝" },
   ];
 
   useEffect(() => {
@@ -45,7 +45,7 @@ const Paiements = () => {
       setLoading(true);
       const params = {};
       if (searchTerm) params.search = searchTerm;
-      if (filterMode) params.mode_paiement = filterMode;
+      if (filterMode) params.payment_method = filterMode;
 
       const response = await paiementService.getAll(params);
       let data = response.data.results || response.data;
@@ -53,16 +53,16 @@ const Paiements = () => {
       // Filtrer par dates côté client
       if (dateDebut) {
         data = data.filter(
-          (p) => new Date(p.date_paiement) >= new Date(dateDebut),
+          (p) => new Date(p.payment_date) >= new Date(dateDebut),
         );
       }
       if (dateFin) {
         const fin = new Date(dateFin);
         fin.setHours(23, 59, 59);
-        data = data.filter((p) => new Date(p.date_paiement) <= fin);
+        data = data.filter((p) => new Date(p.payment_date) <= fin);
       }
 
-      setPaiements(data);
+      setPayments(data);
       calculateStats(data);
     } catch (error) {
       showAlert(error, "Erreur lors du chargement des paiements");
@@ -74,28 +74,28 @@ const Paiements = () => {
   const calculateStats = (data) => {
     const stats = {
       total: 0,
-      especes: 0,
-      carte: 0,
-      mobile: 0,
-      cheque: 0,
+      cash: 0,
+      card: 0,
+      mobile_money: 0,
+      check: 0,
     };
 
-    data.forEach((paiement) => {
-      const montant = parseFloat(paiement.montant);
-      stats.total += montant;
+    data.forEach((payment) => {
+      const amount = parseFloat(payment.amount);
+      stats.total += amount;
 
-      switch (paiement.mode_paiement) {
-        case "ESPECES":
-          stats.especes += montant;
+      switch (payment.payment_method) {
+        case "CASH":
+          stats.cash += amount;
           break;
-        case "CARTE":
-          stats.carte += montant;
+        case "CARD":
+          stats.card += amount;
           break;
-        case "MOBILE":
-          stats.mobile += montant;
+        case "MOBILE_MONEY":
+          stats.mobile_money += amount;
           break;
-        case "CHEQUE":
-          stats.cheque += montant;
+        case "CHECK":
+          stats.check += amount;
           break;
         default:
           break;
@@ -117,42 +117,42 @@ const Paiements = () => {
   const columns = [
     {
       header: "Date",
-      accessor: "date_paiement",
+      accessor: "payment_date",
       render: (row) => (
         <div>
           <p className="font-semibold">
-            {format(new Date(row.date_paiement), "dd/MM/yyyy", { locale: fr })}
+            {format(new Date(row.payment_date), "dd/MM/yyyy", { locale: fr })}
           </p>
           <p className="text-sm text-gray-500">
-            {format(new Date(row.date_paiement), "HH:mm", { locale: fr })}
+            {format(new Date(row.payment_date), "HH:mm", { locale: fr })}
           </p>
         </div>
       ),
     },
     {
       header: "N° Commande",
-      accessor: "commande",
+      accessor: "order_id",
       render: (row) => (
         <span className="font-mono text-sm bg-gray-100 px-2 py-1 rounded">
-          {row.commande?.numero_commande || "-"}
+          {row.order?.order_id || "-"}
         </span>
       ),
     },
     {
       header: "Montant",
-      accessor: "montant",
+      accessor: "amount",
       render: (row) => (
         <span className="font-semibold text-green-600 text-lg">
-          {parseFloat(row.montant).toLocaleString()} FCFA
+          {parseFloat(row.amount).toLocaleString()} FCFA
         </span>
       ),
     },
     {
       header: "Mode de paiement",
-      accessor: "mode_paiement",
+      accessor: "payment_method",
       render: (row) => {
         const mode = MODE_PAIEMENT_CHOICES.find(
-          (m) => m.value === row.mode_paiement,
+          (m) => m.value === row.payment_method,
         );
         return (
           <span className="inline-flex items-center space-x-1 px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
@@ -169,8 +169,8 @@ const Paiements = () => {
     },
     {
       header: "Utilisateur",
-      accessor: "utilisateur_nom",
-      render: (row) => row.utilisateur_nom || "-",
+      accessor: "username",
+      render: (row) => row.username || "-",
     },
     {
       header: "Notes",
@@ -213,7 +213,7 @@ const Paiements = () => {
 
         {/* Statistiques */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-          <div className="card bg-gradient-to-br from-green-500 to-green-600 text-white">
+          <div className="card bg-linear-to-br from-green-500 to-green-600 text-white">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm opacity-90">Total encaissé</p>
@@ -221,7 +221,7 @@ const Paiements = () => {
                   {stats.total.toLocaleString()} FCFA
                 </p>
                 <p className="text-xs opacity-75 mt-1">
-                  {paiements.length} paiements
+                  {payments.length} paiements
                 </p>
               </div>
               <FaMoneyBillWave className="text-4xl opacity-50" />
@@ -229,9 +229,9 @@ const Paiements = () => {
           </div>
 
           {MODE_PAIEMENT_CHOICES.map((mode) => {
-            const montant = stats[mode.value.toLowerCase()] || 0;
-            const count = paiements.filter(
-              (p) => p.mode_paiement === mode.value,
+            const amount = stats[mode.value.toLowerCase()] || 0;
+            const count = payments.filter(
+              (p) => p.payment_method === mode.value,
             ).length;
             return (
               <div
@@ -245,7 +245,7 @@ const Paiements = () => {
                       <span>{mode.label}</span>
                     </p>
                     <p className="text-xl font-bold text-primary-600 mt-1">
-                      {montant.toLocaleString()} FCFA
+                      {amount.toLocaleString()} FCFA
                     </p>
                     <p className="text-xs text-gray-500 mt-1">
                       {count} paiements
@@ -310,7 +310,7 @@ const Paiements = () => {
           {(searchTerm || filterMode || dateDebut || dateFin) && (
             <div className="mt-4 flex items-center justify-between">
               <p className="text-sm text-gray-600">
-                {paiements.length} résultat(s) trouvé(s)
+                {payments.length} résultat(s) trouvé(s)
               </p>
               <button
                 onClick={() => {
@@ -331,13 +331,13 @@ const Paiements = () => {
         <div className="card">
           {loading ? (
             <Loader text="Chargement des paiements..." />
-          ) : paiements.length === 0 ? (
+          ) : payments.length === 0 ? (
             <div className="text-center py-12">
               <FaMoneyBillWave className="mx-auto text-6xl text-gray-300 mb-4" />
               <p className="text-gray-500">Aucun paiement trouvé</p>
             </div>
           ) : (
-            <Table columns={columns} data={paiements} loading={loading} />
+            <Table columns={columns} data={payments} loading={loading} />
           )}
         </div>
       </div>

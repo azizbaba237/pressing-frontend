@@ -12,9 +12,9 @@ const CategoriesTable = ({ category, onEdit, onDelete }) => {
     },
     {
       header: "Nombre de services",
-      accessor: "nombre_services",
+      accessor: "service_count",
       render: (row) => (
-        <span className="badge-info">{row.nombre_services || 0}</span>
+        <span className="badge-info">{row.service_count || 0}</span>
       ),
     },
     {
