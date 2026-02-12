@@ -9,8 +9,8 @@ import ServicesTable from "../components/services/ServicesTable";
 import CategoriesTable from "../components/categories/Categoriestable";
 import ServiceModal from "../components/services/Servicemodal";
 import CategorieModal from "../components/categories/Categoriemodal";
-import {useServicesData}  from "../hooks/useservicesdata ";
-import { useAlert } from "../hooks/usealert ";
+import {useServicesData}  from "../hooks/useservicesdata";
+import { useAlert } from "../hooks/usealert";
 
 const Services = () => {
   const [searchTerm, setSearchTerm] = useState("");
