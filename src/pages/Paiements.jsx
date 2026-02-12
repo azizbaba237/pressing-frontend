@@ -213,7 +213,7 @@ const Paiements = () => {
 
         {/* Statistiques */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-          <div className="card bg-linear-to-br from-green-500 to-green-600 text-white">
+          <div className="card bg-gradient-to-br from-green-500 to-green-600 text-white">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm opacity-90">Total encaissé</p>
@@ -238,7 +238,7 @@ const Paiements = () => {
                 key={mode.value}
                 className="card hover:shadow-lg transition-shadow"
               >
-                <div className="flexitems-center justify-between">
+                <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm text-gray-600 flex items-center space-x-1">
                       <span>{mode.icon}</span>

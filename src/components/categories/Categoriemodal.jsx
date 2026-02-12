@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Modal from "../common/Modal";
-import CategorieForm from "./Categorieform ";
+import CategorieForm from "./Categorieform";
 
 const CategorieModal = ({ isOpen, onClose, onSubmit, category }) => {
   const [formData, setFormData] = useState({
