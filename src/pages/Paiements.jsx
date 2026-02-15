@@ -6,7 +6,7 @@ import PaiementsStats from "../components/paiements/PaiementsStats";
 import PaiementsFilters from "../components/paiements/PaiementsFilters";
 import PaiementsTable from "../components/paiements/PaiementsTable";
 import { usePaiementsData } from "../hooks/usePaiementsData";
-import { useAlert } from "../hooks/useAlert";
+import { useAlert } from "../hooks/usealert";
 import { usePaymentStats } from "../hooks/usePaymentStats";
 
 /**
