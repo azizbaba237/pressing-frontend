@@ -9,7 +9,7 @@ import ServicesTable from "../components/services/Servicestable";
 import CategoriesTable from "../components/categories/Categoriestable";
 import ServiceModal from "../components/services/Servicemodal";
 import CategorieModal from "../components/categories/Categoriemodal";
-import {useServicesData}  from "../hooks/useservicesdata";
+import {useServicesData}  from "../hooks/useServicesData";
 import { useAlert } from "../hooks/useAlert";
 
 const Services = () => {
