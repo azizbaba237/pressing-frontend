@@ -1,8 +1,8 @@
 import React from "react";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
-import BarChartCard from "../reports/Barchartcard";
-import StatusBadge from "../reports/Statusbadge";
+import BarChartCard from "./Barchartcard";
+import StatusBadge from "./Statusbadge";
 
 const CommandesTab = ({ orders, calculations }) => {
   const { commandesParJour } = calculations;

@@ -5,9 +5,9 @@ import {
   FaChartLine,
   FaChartPie,
 } from "react-icons/fa";
-import KPICard from "../reports/Kpicard";
-import AreaChartCard from "../reports/Areachartcard";
-import PieChartCard from "../reports/Piechartcard";
+import KPICard from "./Kpicard";
+import AreaChartCard from "./Areachartcard";
+import PieChartCard from "./Piechartcard";
 //import { formatMontant } from "../../constants/reports/Formatters";
 
 const OverviewTab = ({ calculations, orders }) => {

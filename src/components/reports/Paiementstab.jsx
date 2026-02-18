@@ -1,7 +1,7 @@
 import React from "react";
-import LineChartCard from "../reports/Linechartcard";
-import PieChartCard from "../reports/Piechartcard";
-import PaymentMethodBar from "../reports/PaymentMethodBar";
+import LineChartCard from "./Linechartcard";
+import PieChartCard from "./Piechartcard";
+import PaymentMethodBar from "./Paymentmethodbar";
 import { CHART_COLORS } from "../../constants/reports";
 
 const PaiementsTab = ({ calculations }) => {

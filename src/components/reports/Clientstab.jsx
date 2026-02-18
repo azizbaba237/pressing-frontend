@@ -3,7 +3,7 @@ import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { FaUsers } from "react-icons/fa";
 //import KPICard from "../reports/Kpicard";
-import TopClientCard from "../reports/TopClientCard";
+import TopClientCard from "./Topclientcard";
 import { CHART_COLORS } from "../../constants/reports";
 
 const ClientsTab = ({ customers, calculations }) => {
