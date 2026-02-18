@@ -8,7 +8,7 @@ import {
 import KPICard from "../reports/Kpicard";
 import AreaChartCard from "../reports/Areachartcard";
 import PieChartCard from "../reports/Piechartcard";
-import { formatMontant } from "../../constants/reports/Formatters";
+//import { formatMontant } from "../../constants/reports/Formatters";
 
 const OverviewTab = ({ calculations, orders }) => {
   const {

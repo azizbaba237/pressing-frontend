@@ -26,7 +26,7 @@ const Rapports = () => {
 
   const { alert, showAlert, closeAlert } = useAlert();
 
-  const { orders, payments, customers, stats, loading, fetchAllData } =
+  const { orders, payments, customers, loading, fetchAllData } =
     useRapportsData({ showAlert });
 
   const calculations = useRapportsCalculations({
