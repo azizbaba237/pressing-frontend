@@ -98,7 +98,7 @@ const Parametres = () => {
         confirmer_mot_de_passe: '',
       });
     } catch (error) {
-      showAlert('error', 'Erreur lors du changement de mot de passe');
+      showAlert(error, 'Erreur lors du changement de mot de passe');
     }
   };
 
