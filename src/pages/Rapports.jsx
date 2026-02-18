@@ -8,7 +8,7 @@ import OverviewTab from "../components/reports/Overviewtab";
 import CommandesTab from "../components/reports/Commandestab";
 import PaiementsTab from "../components/reports/Paiementstab";
 import ClientsTab from "../components/reports/Clientstab";
-import { useRapportsData } from "../hooks/reports/userapportsdata";
+import { useRapportsData } from "../hooks/reports/useRapportsData";
 import { useRapportsCalculations } from "../hooks/reports/useRapportsCalculations";
 import { useAlert } from "../hooks/useAlert";
 
