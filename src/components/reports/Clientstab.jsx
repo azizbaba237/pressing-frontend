@@ -2,7 +2,7 @@ import React from "react";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { FaUsers } from "react-icons/fa";
-import KPICard from "../reports/Kpicard";
+//import KPICard from "../reports/Kpicard";
 import TopClientCard from "../reports/TopClientCard";
 import { CHART_COLORS } from "../../constants/reports";
 
