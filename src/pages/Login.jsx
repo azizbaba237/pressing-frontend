@@ -32,7 +32,7 @@ const Login = () => {
     <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-primary-500 to-primary-700 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div>
-          <h2 className="mt-6 text-center text-4xl font-extrabold text-white">
+          <h2 className="mt-6 text-center text-4xl font-extrabold text-dark">
             Pressing Pro
           </h2>
           <p className="mt-2 text-center text-sm text-primary-100">
@@ -65,7 +65,7 @@ const Login = () => {
                     required
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
-                    className="input-field pl-10"
+                    className="input-field pl-10!"
                     placeholder="Entrez votre nom d'utilisateur"
                   />
                 </div>
@@ -89,7 +89,7 @@ const Login = () => {
                     required
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="input-field pl-10"
+                    className="input-field pl-10!"
                     placeholder="Entrez votre mot de passe"
                   />
                 </div>
