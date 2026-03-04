@@ -8,10 +8,10 @@ import { FaPlus } from "react-icons/fa";
  */
 const CommandesHeader = ({ onNewCommande }) => {
   return (
-    <div className="flex justify-between items-center">
+    <div className="flex justify-between items-center gap-4">
       <div>
         <h1 className="text-3xl font-bold text-gray-900">Commandes</h1>
-        <p className="mt-2 text-gray-600">Gérez les commandes du pressing</p>
+        <p className="mt-2 text-gray-600">Gestion des commandes</p>
       </div>
       <button
         onClick={onNewCommande}
