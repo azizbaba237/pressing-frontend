@@ -10,26 +10,34 @@ const NotificationToggle = ({
 }) => {
   return (
     <div
-      className={`flex items-start space-x-4 p-4 bg-gray-50 rounded-lg ${
-        disabled ? "opacity-60" : ""
-      }`}
+      className={`flex items-center justify-between gap-4 p-3.5 sm:p-4 rounded-xl border transition-all ${
+        checked && !disabled
+          ? "bg-blue-50 border-blue-200"
+          : "bg-gray-50 border-gray-100"
+      } ${disabled ? "opacity-50" : "cursor-pointer"}`}
+      onClick={() => !disabled && onChange(!checked)}
     >
-      <div className="flex-1">
-        <div className="flex items-center space-x-2">
-          <p className="font-medium text-gray-900">{label}</p>
+      {/* Texte */}
+      <div className="min-w-0 flex-1">
+        <div className="flex items-center gap-2 flex-wrap">
+          <p className="text-sm font-medium text-gray-900">{label}</p>
           {badge && (
-            <span className="text-xs bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded-full">
+            <span className="text-xs bg-yellow-100 text-yellow-700 border border-yellow-200 px-2 py-0.5 rounded-full shrink-0">
               {badge}
             </span>
           )}
         </div>
-        <p className="text-sm text-gray-500 mt-1">{description}</p>
+        <p className="text-xs text-gray-500 mt-0.5 leading-snug">
+          {description}
+        </p>
       </div>
 
+      {/* Toggle switch */}
       <label
-        className={`relative inline-flex items-center ${
+        className={`relative inline-flex items-center shrink-0 ${
           disabled ? "cursor-not-allowed" : "cursor-pointer"
         }`}
+        onClick={(e) => e.stopPropagation()}
       >
         <input
           type="checkbox"
@@ -38,7 +46,7 @@ const NotificationToggle = ({
           onChange={(e) => !disabled && onChange(e.target.checked)}
           disabled={disabled}
         />
-        <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600"></div>
+        <div className="w-10 h-5 bg-gray-200 rounded-full peer peer-checked:bg-blue-500 after:content-[''] after:absolute after:top-0.5 after:start-0.5 after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-5 shadow-inner" />
       </label>
     </div>
   );

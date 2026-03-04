@@ -37,7 +37,7 @@ const Parametres = () => {
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Paramètres</h1>
           <p className="mt-2 text-gray-600">
-            Gérez vos préférences et la configuration de l'application
+            Géestion des préférences et configurations
           </p>
         </div>
 

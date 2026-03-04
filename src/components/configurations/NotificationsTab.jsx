@@ -1,5 +1,9 @@
-import { FaSave } from "react-icons/fa";
-import { NOTIFICATIONS_CONFIG, NOTIFICATION_CHANNELS } from "../../constants/configurations";
+import React from "react";
+import { FaSave, FaBell } from "react-icons/fa";
+import {
+  NOTIFICATIONS_CONFIG,
+  NOTIFICATION_CHANNELS,
+} from "../../constants/configurations";
 import NotificationToggle from "./NotificationToggle";
 
 const NotificationsTab = ({
@@ -8,18 +12,34 @@ const NotificationsTab = ({
   handleSaveNotifications,
 }) => {
   return (
-    <div className="card">
-      <h2 className="text-xl font-bold text-gray-900 mb-6">
-        Préférences de notifications
-      </h2>
+    <div className="space-y-4">
+      {/* Header */}
+      <div className="bg-linear-to-br from-yellow-400 to-orange-500 rounded-2xl p-5 sm:p-6 text-white">
+        <div className="flex items-center space-x-4">
+          <div className="w-12 h-12 bg-white bg-opacity-20 rounded-2xl flex items-center justify-center shrink-0">
+            <FaBell className="text-xl text-white" />
+          </div>
+          <div>
+            <h2 className="text-lg sm:text-xl font-bold">Notifications</h2>
+            <p className="text-yellow-100 text-sm">
+              Gérez vos préférences d'alertes
+            </p>
+          </div>
+        </div>
+      </div>
 
-      <form onSubmit={handleSaveNotifications} className="space-y-6">
-        {/* Notifications internes */}
-        <div>
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">
-            Notifications de l'application
-          </h3>
-          <div className="space-y-4">
+      <form onSubmit={handleSaveNotifications} className="space-y-4">
+        {/* Notifications app */}
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 sm:p-6">
+          <div className="flex items-center space-x-2 mb-4">
+            <div className="w-7 h-7 bg-yellow-50 rounded-lg flex items-center justify-center">
+              <FaBell className="text-yellow-500 text-xs" />
+            </div>
+            <h3 className="text-sm font-semibold text-gray-800 uppercase tracking-wide">
+              Notifications de l'application
+            </h3>
+          </div>
+          <div className="space-y-3">
             {NOTIFICATIONS_CONFIG.map((notif) => (
               <NotificationToggle
                 key={notif.key}
@@ -32,12 +52,17 @@ const NotificationsTab = ({
           </div>
         </div>
 
-        {/* Canaux de notification */}
-        <div>
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">
-            Canaux de notification
-          </h3>
-          <div className="space-y-4">
+        {/* Canaux */}
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 sm:p-6">
+          <div className="flex items-center space-x-2 mb-4">
+            <div className="w-7 h-7 bg-blue-50 rounded-lg flex items-center justify-center">
+              <FaBell className="text-blue-500 text-xs" />
+            </div>
+            <h3 className="text-sm font-semibold text-gray-800 uppercase tracking-wide">
+              Canaux de notification
+            </h3>
+          </div>
+          <div className="space-y-3">
             {NOTIFICATION_CHANNELS.map((canal) => (
               <NotificationToggle
                 key={canal.key}
@@ -52,7 +77,7 @@ const NotificationsTab = ({
           </div>
         </div>
 
-        <div className="flex justify-end pt-4">
+        <div className="flex justify-end">
           <button
             type="submit"
             className="btn-primary flex items-center space-x-2"
@@ -62,7 +87,7 @@ const NotificationsTab = ({
           </button>
         </div>
       </form>
-</div>
+    </div>
   );
 };
 
