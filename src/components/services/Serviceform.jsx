@@ -65,7 +65,8 @@ const ServiceForm = ({
         ></textarea>
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      {/* Prix et durée : colonne sur très petit, côte à côte sinon */}
+      <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
             Prix (FCFA) *
@@ -117,7 +118,7 @@ const ServiceForm = ({
         </label>
       </div>
 
-      <div className="flex justify-end space-x-3 pt-4">
+      <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-2 sm:gap-3 pt-4">
         <button type="button" onClick={onCancel} className="btn-secondary">
           Annuler
         </button>

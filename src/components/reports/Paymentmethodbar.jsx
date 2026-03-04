@@ -5,20 +5,25 @@ const PaymentMethodBar = ({ mode, total, color }) => {
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-1">
-        <span className="text-sm font-medium text-gray-700">{mode.name}</span>
-        <span className="text-sm font-semibold text-gray-900">
-          {mode.total.toLocaleString()} FCFA ({mode.count} paiements)
+      <div className="flex justify-between items-start sm:items-center gap-2 mb-1.5">
+        <span className="text-sm font-medium text-gray-700 shrink-0">
+          {mode.name}
         </span>
+        {/* Montant + nb paiements sur mobile : empilé */}
+        <div className="text-right">
+          <span className="text-sm font-semibold text-gray-900 block sm:inline">
+            {mode.total.toLocaleString()} FCFA
+          </span>
+          <span className="text-xs text-gray-500 sm:ml-1">
+            ({mode.count} paiements)
+          </span>
+        </div>
       </div>
       <div className="w-full bg-gray-200 rounded-full h-2">
         <div
           className="h-2 rounded-full transition-all duration-500"
-          style={{
-            width: `${percentage}%`,
-            backgroundColor: color,
-          }}
-        ></div>
+          style={{ width: `${percentage}%`, backgroundColor: color }}
+        />
       </div>
     </div>
   );
