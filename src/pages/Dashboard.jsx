@@ -119,7 +119,7 @@ const Dashboard = () => {
             >
               <div className="flex items-center justify-between">
                 <div className="flex-1 min-w-0">
-                  <p className="text-xs sm:text-sm font-medium text-gray-600 truncate">
+                  <p className="text-xs sm:text-sm font-medium text-gray-600">
                     {card.title}
                   </p>
                   <p
