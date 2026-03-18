@@ -98,7 +98,7 @@ const ClientDashboard = () => {
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
                         <div>
                             <h1 className="text-3xl md:text-4xl font-bold mb-2">
-                                Bonjour, {client?.prenom} ! 👋
+                                Bonjour, {client?.first_name} ! 👋
                             </h1>
                             <p className="text-blue-100 text-lg">
                                 Bienvenue sur votre espace personnel
@@ -124,7 +124,7 @@ const ClientDashboard = () => {
                             <div>
                                 <p className="text-sm text-gray-600 mb-1">Total Commandes</p>
                                 <p className="text-3xl font-bold bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                                    {stats?.total_commandes || 0}
+                                    {stats?.total_orders || 0}
                                 </p>
                             </div>
                             <div className="bg-linear-to-br from-blue-500 to-purple-500 p-4 rounded-full">
@@ -139,7 +139,7 @@ const ClientDashboard = () => {
                             <div>
                                 <p className="text-sm text-gray-600 mb-1">En cours</p>
                                 <p className="text-3xl font-bold bg-linear-to-r from-yellow-600 to-orange-600 bg-clip-text text-transparent">
-                                    {stats?.commandes_en_cours || 0}
+                                    {stats?.orders_pending || 0}
                                 </p>
                             </div>
                             <div className="bg-linear-to-br from-yellow-500 to-orange-500 p-4 rounded-full">
@@ -154,7 +154,7 @@ const ClientDashboard = () => {
                             <div>
                                 <p className="text-sm text-gray-600 mb-1">Prêtes</p>
                                 <p className="text-3xl font-bold bg-linear-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
-                                    {stats?.commandes_pretes || 0}
+                                    {stats?.orders_ready || 0}
                                 </p>
                             </div>
                             <div className="bg-linear-to-br from-green-500 to-emerald-500 p-4 rounded-full">
@@ -169,7 +169,7 @@ const ClientDashboard = () => {
                             <div>
                                 <p className="text-sm text-gray-600 mb-1">Total dépensé</p>
                                 <p className="text-3xl font-bold bg-linear-to-r from-pink-600 to-rose-600 bg-clip-text text-transparent">
-                                    {(stats?.montant_total_depense || 0).toLocaleString()}
+                                    {(stats?.total_amount_spent || 0).toLocaleString()}
                                 </p>
                                 <p className="text-xs text-gray-500 mt-1">FCFA</p>
                             </div>
@@ -190,7 +190,7 @@ const ClientDashboard = () => {
                                 </div>
                                 <div>
                                     <h3 className="text-2xl font-bold">
-                                        {stats.commandes_pretes} commande(s) prête(s) !
+                                        {stats.orders_ready} commande(s) prête(s) !
                                     </h3>
                                     <p className="text-green-100">
                                         Venez récupérer vos articles au pressing
@@ -245,11 +245,11 @@ const ClientDashboard = () => {
                             </div>
                         ) : (
                             <div className="space-y-4">
-                                {recentCommandes.map((commande) => {
-                                    const statutInfo = getStatutInfo(commande.statut);
+                                {recentCommandes.map((order) => {
+                                    const statutInfo = getStatutInfo(order.status);
                                     return (
                                         <Link
-                                            key={commande.id}
+                                            key={order.id}
                                             to={`/client/commandes`}
                                             className="block bg-linear-to-r from-gray-50 to-gray-100 rounded-xl p-5 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
                                         >
@@ -257,7 +257,7 @@ const ClientDashboard = () => {
                                                 <div className="flex-1">
                                                     <div className="flex items-center space-x-3 mb-2">
                                                         <span className="font-mono font-bold text-gray-900">
-                                                            {commande.numero_commande}
+                                                            {order.order_id}
                                                         </span>
                                                         <span
                                                             className={`inline-flex items-center space-x-1 px-3 py-1 rounded-full text-xs font-semibold ${statutInfo.color}`}
@@ -270,24 +270,24 @@ const ClientDashboard = () => {
                                                         <div className="flex items-center space-x-1">
                                                             <FaCalendarAlt className="text-gray-400" />
                                                             <span>
-                                                                {format(new Date(commande.date_depot), 'dd MMM yyyy', {
+                                                                {format(new Date(order.deposit_date), 'dd MMM yyyy', {
                                                                     locale: fr,
                                                                 })}
                                                             </span>
                                                         </div>
                                                         <div className="flex items-center space-x-1">
                                                             <FaShoppingBag className="text-gray-400" />
-                                                            <span>{commande.articles?.length || 0} article(s)</span>
+                                                            <span>{order.items?.length || 0} article(s)</span>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div className="text-right">
                                                     <p className="text-2xl font-bold bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                                                        {parseFloat(commande.montant_total).toLocaleString()} FCFA
+                                                        {parseFloat(order.total_amount).toLocaleString()} FCFA
                                                     </p>
-                                                    {commande.montant_restant > 0 && (
+                                                    {order.amount_pending > 0 && (
                                                         <p className="text-xs text-red-600 font-semibold">
-                                                            Reste: {parseFloat(commande.montant_restant).toLocaleString()}{' '}
+                                                            Reste: {parseFloat(order.amount_pending).toLocaleString()}{' '}
                                                             FCFA
                                                         </p>
                                                     )}

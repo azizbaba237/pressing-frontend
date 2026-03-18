@@ -15,10 +15,10 @@ import {
 
 const ClientRegister = () => {
     const [formData, setFormData] = useState({
-        nom: '',
-        prenom: '',
+        last_name: '',
+        first_name: '',
         username: '',
-        telephone: '',
+        phone: '',
         email: '',
         adresse: '',
         password: '',
@@ -38,11 +38,11 @@ const ClientRegister = () => {
     };
 
     const validateStep1 = () => {
-        if (!formData.nom || !formData.prenom || !formData.telephone) {
+        if (!formData.last_name || !formData.first_name || !formData.phone) {
             setError('Veuillez remplir tous les champs obligatoires');
             return false;
         }
-        if (formData.telephone.length < 9) {
+        if (formData.phone.length < 9) {
             setError('Numéro de téléphone invalide');
             return false;
         }
@@ -158,9 +158,9 @@ const ClientRegister = () => {
                                             </label>
                                             <input
                                                 type="text"
-                                                name="prenom"
+                                                name="first_name"
                                                 required
-                                                value={formData.prenom}
+                                                value={formData.first_name}
                                                 onChange={handleChange}
                                                 className="input-field"
                                                 placeholder="Votre prénom"
@@ -172,9 +172,9 @@ const ClientRegister = () => {
                                             </label>
                                             <input
                                                 type="text"
-                                                name="nom"
+                                                name="last_name"
                                                 required
-                                                value={formData.nom}
+                                                value={formData.last_name}
                                                 onChange={handleChange}
                                                 className="input-field"
                                                 placeholder="Votre nom"
@@ -192,11 +192,11 @@ const ClientRegister = () => {
                                             </div>
                                             <input
                                                 type="tel"
-                                                name="telephone"
+                                                name="phone"
                                                 required
-                                                value={formData.telephone}
+                                                value={formData.phone}
                                                 onChange={handleChange}
-                                                className="input-field pl-10"
+                                                className="input-field pl-10!"
                                                 placeholder="+237 6XX XXX XXX"
                                             />
                                         </div>
@@ -215,7 +215,7 @@ const ClientRegister = () => {
                                                 name="email"
                                                 value={formData.email}
                                                 onChange={handleChange}
-                                                className="input-field pl-10"
+                                                className="input-field pl-10!"
                                                 placeholder="votre@email.com"
                                             />
                                         </div>
@@ -234,7 +234,7 @@ const ClientRegister = () => {
                                                 rows="2"
                                                 value={formData.adresse}
                                                 onChange={handleChange}
-                                                className="input-field pl-10"
+                                                className="input-field pl-10!"
                                                 placeholder="Votre adresse complète"
                                             ></textarea>
                                         </div>
@@ -267,7 +267,7 @@ const ClientRegister = () => {
                                                 required
                                                 value={formData.username}
                                                 onChange={handleChange}
-                                                className="input-field pl-10"
+                                                className="input-field pl-10!"
                                                 placeholder="Choisissez un nom d'utilisateur"
                                             />
                                         </div>
@@ -290,7 +290,7 @@ const ClientRegister = () => {
                                                 required
                                                 value={formData.password}
                                                 onChange={handleChange}
-                                                className="input-field pl-10"
+                                                className="input-field pl-10!"
                                                 placeholder="Créez un mot de passe sécurisé"
                                             />
                                         </div>
@@ -319,7 +319,7 @@ const ClientRegister = () => {
                                                 required
                                                 value={formData.confirmPassword}
                                                 onChange={handleChange}
-                                                className={`input-field pl-10 ${formData.confirmPassword &&
+                                                className={`input-field pl-10! ${formData.confirmPassword &&
                                                         formData.password !== formData.confirmPassword
                                                         ? 'border-red-500'
                                                         : ''

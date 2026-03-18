@@ -1,72 +1,76 @@
-import React, { createContext, useState, useContext, useEffect } from 'react';
-import { clientAuthService } from '../services/clientApi';
+import React, { createContext, useState, useContext, useEffect } from "react";
+import { clientAuthService } from "../services/clientApi";
 
 const ClientAuthContext = createContext();
 
 export const useClientAuth = () => {
-    const context = useContext(ClientAuthContext);
-    if (!context) {
-        throw new Error('useClientAuth must be used within a ClientAuthProvider');
-    }
-    return context;
+  const context = useContext(ClientAuthContext);
+  if (!context) {
+    throw new Error("useClientAuth must be used within a ClientAuthProvider");
+  }
+  return context;
 };
 
 export const ClientAuthProvider = ({ children }) => {
-    const [client, setClient] = useState(null);
-    const [loading, setLoading] = useState(true);
+  const [client, setClient] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const loadClient = () => {
-            const clientData = clientAuthService.getClientData();
-            setClient(clientData);
-            setLoading(false);
-        };
-        loadClient();
-    }, []);
-
-    const register = async (data) => {
-        try {
-            const response = await clientAuthService.register(data);
-            setClient(response.client);
-            return { success: true, data: response };
-        } catch (error) {
-            return {
-                success: false,
-                error: error.response?.data?.error || 'Erreur lors de l\'inscription',
-            };
-        }
+  useEffect(() => {
+    const loadClient = () => {
+      const clientData = clientAuthService.getClientData();
+      setClient(clientData);
+      setLoading(false);
     };
+    loadClient();
+  }, []);
 
-    const login = async (username, password) => {
-        try {
-            const response = await clientAuthService.login(username, password);
-            setClient(response.client);
-            return { success: true, data: response };
-        } catch (error) {
-            return {
-                success: false,
-                error: error.response?.data?.error || 'Erreur de connexion',
-            };
-        }
-    };
+  const register = async (data) => {
+    try {
+      const response = await clientAuthService.register(data);
+      setClient(response.customer);
+      return { success: true, data: response };
+    } catch (error) {
+      return {
+        success: false,
+        error: error.response?.data?.error || "Erreur lors de l'inscription",
+      };
+    }
+  };
 
-    const logout = () => {
-        clientAuthService.logout();
-        setClient(null);
-    };
+  const login = async (username, password) => {
+    try {
+      const response = await clientAuthService.login(username, password);
+      setClient(response.customer);
+      return { success: true, data: response };
+    } catch (error) {
+      return {
+        success: false,
+        error: error.response?.data?.error || "Erreur de connexion",
+      };
+    }
+  };
 
-    const isAuthenticated = () => {
-        return clientAuthService.isAuthenticated();
-    };
+  const logout = () => {
+    clientAuthService.logout();
+    setClient(null);
+  };
 
-    const value = {
-        client,
-        register,
-        login,
-        logout,
-        isAuthenticated,
-        loading,
-    };
+  const isAuthenticated = () => {
+    return clientAuthService.isAuthenticated();
+  };
 
-    return <ClientAuthContext.Provider value={value}>{children}</ClientAuthContext.Provider>;
+  const value = {
+    client,
+    register,
+    login,
+    logout,
+    isAuthenticated,
+    loading,
+  };
+
+  return (
+    <ClientAuthContext.Provider value={value}>
+      {children}
+    </ClientAuthContext.Provider>
+  );
 };

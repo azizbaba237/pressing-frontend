@@ -57,14 +57,14 @@ const ClientServices = () => {
 
     if (selectedCategorie) {
       filtered = filtered.filter(
-        (s) => s.categorie === parseInt(selectedCategorie),
+        (s) => s.category === parseInt(selectedCategorie),
       );
     }
 
     if (searchTerm) {
       filtered = filtered.filter(
         (s) =>
-          s.nom.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          s.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
           s.description?.toLowerCase().includes(searchTerm.toLowerCase()),
       );
     }
@@ -127,7 +127,7 @@ const ClientServices = () => {
                 placeholder="Rechercher un service..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="input-field pl-10 pr-10"
+                className="input-field pl-10! pr-10"
               />
               {searchTerm && (
                 <button
@@ -147,7 +147,7 @@ const ClientServices = () => {
               <select
                 value={selectedCategorie}
                 onChange={(e) => setSelectedCategorie(e.target.value)}
-                className="input-field pl-10"
+                className="input-field pl-10!"
               >
                 <option value="">Toutes les catégories</option>
                 {categories.map((cat) => (
@@ -278,20 +278,20 @@ const ClientServices = () => {
                       {/* Price */}
                       <div className="flex items-center justify-between bg-linear-to-r from-green-50 to-emerald-50 rounded-lg p-3">
                         <div className="flex items-center space-x-2">
-                          <div className="w-10 h-10 bg-gr-to-br from-green-500 to-emerald-500 rounded-full flex items-center justify-center">
+                          <div className="w-10 h-10 bg-linear-to-br from-green-500 to-emerald-500 rounded-full flex items-center justify-center">
                             <FaMoneyBillWave className="text-white" />
                           </div>
                           <span className="text-sm text-gray-600">Prix</span>
                         </div>
-                        <span className="text-2xl font-bold bg-gr-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
+                        <span className="text-2xl font-bold bg-linear-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
                           {parseFloat(service.price).toLocaleString()} FCFA
                         </span>
                       </div>
 
                       {/* Duration */}
-                      <div className="flex items-center justify-between bg-gr-to-r from-blue-50 to-purple-50 rounded-lg p-3">
+                      <div className="flex items-center justify-between bg-linear-to-r from-blue-50 to-purple-50 rounded-lg p-3">
                         <div className="flex items-center space-x-2">
-                          <div className="w-10 h-10 bg-gr-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
+                          <div className="w-10 h-10 bg-linear-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
                             <FaClock className="text-white" />
                           </div>
                           <span className="text-sm text-gray-600">Délai</span>

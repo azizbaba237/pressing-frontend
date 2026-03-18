@@ -24,8 +24,8 @@ const ClientProfil = () => {
     const [isEditing, setIsEditing] = useState(false);
     const [stats, setStats] = useState(null);
     const [formData, setFormData] = useState({
-        prenom: '',
-        nom: '',
+        first_name: '',
+        last_name: '',
         email: '',
         adresse: '',
     });
@@ -33,8 +33,8 @@ const ClientProfil = () => {
     useEffect(() => {
         if (client) {
             setFormData({
-                prenom: client.prenom || '',
-                nom: client.nom || '',
+                first_name: client.first_name || '',
+                last_name: client.last_name || '',
                 email: client.email || '',
                 adresse: client.adresse || '',
             });
@@ -102,11 +102,11 @@ const ClientProfil = () => {
                         </div>
                         <div className="text-center sm:text-left">
                             <h1 className="text-3xl md:text-4xl font-bold mb-2">
-                                {client.prenom} {client.nom}
+                                {client.first_name} {client.last_name}
                             </h1>
                             <p className="text-indigo-100 flex items-center justify-center sm:justify-start space-x-2">
                                 <FaPhone />
-                                <span>{client.telephone}</span>
+                                <span>{client.phone}</span>
                             </p>
                         </div>
                     </div>
@@ -137,7 +137,7 @@ const ClientProfil = () => {
                                                 </div>
                                             </div>
                                             <p className="text-3xl font-bold text-blue-600">
-                                                {stats.total_commandes}
+                                                {stats.total_orders}
                                             </p>
                                         </div>
                                     </div>
@@ -154,7 +154,7 @@ const ClientProfil = () => {
                                                 </div>
                                             </div>
                                             <p className="text-3xl font-bold text-green-600">
-                                                {stats.commandes_livrees}
+                                                {stats.orders_delivered}
                                             </p>
                                         </div>
                                     </div>
@@ -172,7 +172,7 @@ const ClientProfil = () => {
                                             </div>
                                             <div className="text-right">
                                                 <p className="text-2xl font-bold text-purple-600">
-                                                    {stats.montant_total_depense.toLocaleString()}
+                                                    {stats.total_amount_spent.toLocaleString()}
                                                 </p>
                                                 <p className="text-xs text-gray-600">FCFA</p>
                                             </div>
@@ -235,8 +235,8 @@ const ClientProfil = () => {
                                             </div>
                                             <input
                                                 type="text"
-                                                name="prenom"
-                                                value={formData.prenom}
+                                                name="first_name"
+                                                value={formData.first_name}
                                                 onChange={handleChange}
                                                 disabled={!isEditing}
                                                 className={`input-field pl-10 ${!isEditing ? 'bg-gray-50 cursor-not-allowed' : ''
@@ -255,8 +255,8 @@ const ClientProfil = () => {
                                             </div>
                                             <input
                                                 type="text"
-                                                name="nom"
-                                                value={formData.nom}
+                                                name="last_name"
+                                                value={formData.last_name}
                                                 onChange={handleChange}
                                                 disabled={!isEditing}
                                                 className={`input-field pl-10 ${!isEditing ? 'bg-gray-50 cursor-not-allowed' : ''
@@ -276,7 +276,7 @@ const ClientProfil = () => {
                                         </div>
                                         <input
                                             type="tel"
-                                            value={client.telephone}
+                                            value={client.phone}
                                             disabled
                                             className="input-field pl-10 bg-gray-50 cursor-not-allowed"
                                         />
@@ -335,8 +335,8 @@ const ClientProfil = () => {
                                             onClick={() => {
                                                 setIsEditing(false);
                                                 setFormData({
-                                                    prenom: client.prenom || '',
-                                                    nom: client.nom || '',
+                                                    first_name: client.first_name || '',
+                                                    last_name: client.last_name || '',
                                                     email: client.email || '',
                                                     adresse: client.adresse || '',
                                                 });
