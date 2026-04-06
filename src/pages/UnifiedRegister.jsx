@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useUnifiedAuth } from '../contexts/UnifiedAuthContext';
-import Alert from '../components/common/Alert';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useUnifiedAuth } from "../contexts/UnifiedAuthContext";
+import Alert from "../components/common/Alert";
 import {
   FaUser,
   FaLock,
@@ -11,20 +11,20 @@ import {
   FaSpinner,
   FaArrowLeft,
   FaCheckCircle,
-} from 'react-icons/fa';
+} from "react-icons/fa";
 
 const UnifiedRegister = () => {
   const [formData, setFormData] = useState({
-    last_name: '',
-    first_name: '',
-    username: '',
-    phone: '',
-    email: '',
-    adresse: '',
-    password: '',
-    confirmPassword: '',
+    last_name: "",
+    first_name: "",
+    username: "",
+    phone: "",
+    email: "",
+    adresse: "",
+    password: "",
+    confirmPassword: "",
   });
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState(1);
   const { register } = useUnifiedAuth();
@@ -39,11 +39,11 @@ const UnifiedRegister = () => {
 
   const validateStep1 = () => {
     if (!formData.last_name || !formData.first_name || !formData.phone) {
-      setError('Veuillez remplir tous les champs obligatoires');
+      setError("Veuillez remplir tous les champs obligatoires");
       return false;
     }
     if (formData.phone.length < 9) {
-      setError('Numéro de téléphone invalide');
+      setError("Numéro de téléphone invalide");
       return false;
     }
     return true;
@@ -51,22 +51,22 @@ const UnifiedRegister = () => {
 
   const validateStep2 = () => {
     if (!formData.username || !formData.password || !formData.confirmPassword) {
-      setError('Veuillez remplir tous les champs obligatoires');
+      setError("Veuillez remplir tous les champs obligatoires");
       return false;
     }
     if (formData.password.length < 8) {
-      setError('Le mot de passe doit contenir au moins 8 caractères');
+      setError("Le mot de passe doit contenir au moins 8 caractères");
       return false;
     }
     if (formData.password !== formData.confirmPassword) {
-      setError('Les mots de passe ne correspondent pas');
+      setError("Les mots de passe ne correspondent pas");
       return false;
     }
     return true;
   };
 
   const handleNext = () => {
-    setError('');
+    setError("");
     if (step === 1 && validateStep1()) {
       setStep(2);
     }
@@ -74,7 +74,7 @@ const UnifiedRegister = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
+    setError("");
 
     if (!validateStep2()) return;
 
@@ -108,8 +108,12 @@ const UnifiedRegister = () => {
             <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
               <FaUser className="text-4xl text-green-600" />
             </div>
-            <h2 className="text-3xl font-extrabold text-white">Créer un compte</h2>
-            <p className="mt-2 text-green-100">Rejoignez Pressing Pro aujourd'hui</p>
+            <h2 className="text-3xl font-extrabold text-white">
+              Créer un compte
+            </h2>
+            <p className="mt-2 text-green-100">
+              Rejoignez Pressing Pro aujourd'hui
+            </p>
           </div>
 
           {/* Progress Indicator */}
@@ -118,12 +122,14 @@ const UnifiedRegister = () => {
               <div className="flex-1">
                 <div
                   className={`h-2 rounded-full transition-all ${
-                    step >= 1 ? 'bg-linear-to-r from-green-600 to-teal-600' : 'bg-gray-200'
+                    step >= 1
+                      ? "bg-linear-to-r from-green-600 to-teal-600"
+                      : "bg-gray-200"
                   }`}
                 ></div>
                 <p
                   className={`text-xs mt-2 font-medium ${
-                    step >= 1 ? 'text-green-600' : 'text-gray-400'
+                    step >= 1 ? "text-green-600" : "text-gray-400"
                   }`}
                 >
                   Informations personnelles
@@ -133,12 +139,14 @@ const UnifiedRegister = () => {
               <div className="flex-1">
                 <div
                   className={`h-2 rounded-full transition-all ${
-                    step >= 2 ? 'bg-linear-to-r from-green-600 to-teal-600' : 'bg-gray-200'
+                    step >= 2
+                      ? "bg-linear-to-r from-green-600 to-teal-600"
+                      : "bg-gray-200"
                   }`}
                 ></div>
                 <p
                   className={`text-xs mt-2 font-medium ${
-                    step >= 2 ? 'text-green-600' : 'text-gray-400'
+                    step >= 2 ? "text-green-600" : "text-gray-400"
                   }`}
                 >
                   Compte et sécurité
@@ -149,7 +157,13 @@ const UnifiedRegister = () => {
 
           {/* Form */}
           <div className="px-8 pb-8">
-            {error && <Alert type="error" message={error} onClose={() => setError('')} />}
+            {error && (
+              <Alert
+                type="error"
+                message={error}
+                onClose={() => setError("")}
+              />
+            )}
 
             <form onSubmit={handleSubmit} className="space-y-4">
               {/* Step 1 */}
@@ -313,8 +327,8 @@ const UnifiedRegister = () => {
                           className={`h-5 w-5 ${
                             formData.confirmPassword &&
                             formData.password === formData.confirmPassword
-                              ? 'text-green-500'
-                              : 'text-gray-400'
+                              ? "text-green-500"
+                              : "text-gray-400"
                           }`}
                         />
                       </div>
@@ -327,8 +341,8 @@ const UnifiedRegister = () => {
                         className={`input-field pl-10! ${
                           formData.confirmPassword &&
                           formData.password !== formData.confirmPassword
-                            ? 'border-red-500'
-                            : ''
+                            ? "border-red-500"
+                            : ""
                         }`}
                         placeholder="Confirmez votre mot de passe"
                       />
@@ -374,7 +388,7 @@ const UnifiedRegister = () => {
                           Création...
                         </>
                       ) : (
-                        'Créer mon compte'
+                        "Créer mon compte"
                       )}
                     </button>
                   </div>
@@ -385,7 +399,7 @@ const UnifiedRegister = () => {
             {/* Login Link */}
             <div className="mt-6 text-center">
               <p className="text-sm text-gray-600">
-                Vous avez déjà un compte ?{' '}
+                Vous avez déjà un compte ?{" "}
                 <Link
                   to="/login"
                   className="font-semibold text-green-600 hover:text-green-700"
