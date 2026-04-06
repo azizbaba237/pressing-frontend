@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { serviceService, categorieService } from "../services/api";
+import { serviceService, categoryService } from "../services/orderService";
 export const useServicesData = ({ searchTerm, filterCategorie, showAlert }) => {
   const [services, setServices] = useState([]);
   const [category, setCategory] = useState([]);
@@ -23,7 +23,7 @@ export const useServicesData = ({ searchTerm, filterCategorie, showAlert }) => {
 
   const fetchCategories = async () => {
     try {
-      const response = await categorieService.getAll();
+      const response = await categoryService.getAll();
       setCategory(response.data.results || response.data);
     } catch (error) {
       console.error("Erreur lors du chargement des catégories:", error);
@@ -71,7 +71,7 @@ export const useServicesData = ({ searchTerm, filterCategorie, showAlert }) => {
 
   const createCategorie = async (formData) => {
     try {
-      await categorieService.create(formData);
+      await categoryService.create(formData);
       showAlert("success", "Catégorie ajoutée avec succès");
       await fetchCategories();
       await fetchServices();
@@ -86,7 +86,7 @@ export const useServicesData = ({ searchTerm, filterCategorie, showAlert }) => {
 
   const updateCategorie = async (id, formData) => {
     try {
-      await categorieService.update(id, formData);
+      await categoryService.update(id, formData);
       showAlert("success", "Catégorie modifiée avec succès");
       await fetchCategories();
       await fetchServices();
@@ -101,7 +101,7 @@ export const useServicesData = ({ searchTerm, filterCategorie, showAlert }) => {
 
   const deleteCategorie = async (id) => {
     try {
-      await categorieService.delete(id);
+      await categoryService.delete(id);
       showAlert("success", "Catégorie supprimée avec succès");
       await fetchCategories();
       await fetchServices();

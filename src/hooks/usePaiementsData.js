@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { paiementService } from "../services/api";
+//import { paiementService } from "../services/api";
+import { paymentService } from '../services/orderService';
 
 /**
  * Hook personnalisé pour gérer les données des paiements
@@ -21,7 +22,7 @@ export const usePaiementsData = ({
             if (searchTerm) params.search = searchTerm;
             if (filterMode) params.payment_method = filterMode;
 
-            const response = await paiementService.getAll(params);
+            const response = await paymentService.getAll(params);
             let data = response.data.results || response.data;
 
             // Filtrer par dates côté client

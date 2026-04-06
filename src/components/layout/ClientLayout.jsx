@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { useClientAuth } from '../../contexts/ClientAuthContext';
+import { useUnifiedAuth } from '../../contexts/UnifiedAuthContext';
 import {
     FaHome,
     FaShoppingBag,
@@ -13,7 +13,7 @@ import {
 } from 'react-icons/fa';
 
 const ClientLayout = ({ children }) => {
-    const { client, logout } = useClientAuth();
+    const { client, logout } = useUnifiedAuth();
     const navigate = useNavigate();
     const location = useLocation();
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);

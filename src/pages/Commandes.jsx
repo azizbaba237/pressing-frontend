@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from "react";
 import MainLayout from "../components/layout/MainLayout";
-import {
-  commandeService,
-  clientService,
-  serviceService,
-} from "../services/api";
+import { orderService, customerService, serviceService } from '../services/orderService';
 import Alert from "../components/common/Alert";
 import CommandesHeader from "../components/commandes/CommandesHeader";
 import CommandesFilters from "../components/commandes/CommandesFilters";
@@ -67,7 +63,7 @@ const Commandes = () => {
       if (searchTerm) params.search = searchTerm;
       if (filterStatut) params.status = filterStatut;
 
-      const response = await commandeService.getAll(params);
+      const response = await orderService.getAll(params);
       setCommandes(response.data.results || response.data);
     } catch (error) {
       showAlert(error, "Erreur lors du chargement des commandes");
@@ -78,7 +74,7 @@ const Commandes = () => {
 
   const fetchClients = async () => {
     try {
-      const response = await clientService.getAll({ actif: true });
+      const response = await customerService.getAll({ actif: true });
       setClients(response.data.results || response.data);
     } catch (error) {
       console.error("Erreur lors du chargement des clients:", error);
@@ -116,7 +112,7 @@ const Commandes = () => {
     }
 
     try {
-      await commandeService.create(formData);
+      await orderService.create(formData);
       showAlert("success", "Commande créée avec succès");
       setShowModal(false);
       resetForm();
@@ -136,7 +132,7 @@ const Commandes = () => {
       )
     ) {
       try {
-        await commandeService.delete(order.id);
+        await orderService.delete(order.id);
         showAlert("success", "Commande supprimée avec succès");
         fetchCommandes();
       } catch (error) {
@@ -147,7 +143,7 @@ const Commandes = () => {
 
   const handleViewDetails = async (order) => {
     try {
-      const response = await commandeService.getById(order.id);
+      const response = await orderService.getById(order.id);
       setSelectedCommande(response.data);
       setShowDetailModal(true);
     } catch (error) {
@@ -159,12 +155,12 @@ const Commandes = () => {
 
   const handleChangerStatut = async (commandeId, nouveauStatut) => {
     try {
-      await commandeService.changerStatut(commandeId, nouveauStatut);
+      await orderService.changerStatut(commandeId, nouveauStatut);
       showAlert("success", "Statut modifié avec succès");
       fetchCommandes();
 
       if (showDetailModal) {
-        const response = await commandeService.getById(commandeId);
+        const response = await orderService.getById(commandeId);
         setSelectedCommande(response.data);
       }
     } catch (error) {
@@ -183,14 +179,14 @@ const Commandes = () => {
     }
 
     try {
-      await commandeService.ajouterPaiement(selectedCommande.id, paiementData);
+      await orderService.ajouterPaiement(selectedCommande.id, paiementData);
       showAlert("success", "Paiement ajouté avec succès");
       setShowPaiementModal(false);
       resetPaiementForm();
       fetchCommandes();
 
       // Recharger les détails de la commande
-      const response = await commandeService.getById(selectedCommande.id);
+      const response = await orderService.getById(selectedCommande.id);
       setSelectedCommande(response.data);
     } catch (error) {
       showAlert(error, "Erreur lors de l'ajout du paiement");

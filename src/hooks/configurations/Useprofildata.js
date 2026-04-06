@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { useAuth } from '../../contexts/AuthContext';
+import { useUnifiedAuth } from '../../contexts/UnifiedAuthContext';
 import api from '../../services/api';
 
 /**
  * Hook pour gérer les données du profil utilisateur
  */
 export const useProfilData = ({ showAlert }) => {
-  const { user } = useAuth();
+  const { user } = useUnifiedAuth();
 
   const [profilData, setProfilData] = useState({
     first_name: user?.first_name || '',

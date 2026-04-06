@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import ClientLayout from "../../components/layout/ClientLayout";
-import { clientProfileService } from "../../services/clientApi";
-import { useClientAuth } from "../../contexts/ClientAuthContext";
+//import { clientProfileService } from "../../services/clientApi";
+import api from "../../services/api";
+import { useUnifiedAuth } from '../../contexts/UnifiedAuthContext'
 import Alert from "../../components/common/Alert";
 import Loader from "../../components/common/Loader";
 import {
@@ -18,11 +19,16 @@ import {
 } from "react-icons/fa";
 
 const ClientProfil = () => {
-  const { client } = useClientAuth();
+  const { client } = useUnifiedAuth();
+  const [customer, setCustomers] = useState({});
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [stats, setStats] = useState(null);
+
+  // Récupérer les données depuis localStorage
+  JSON.parse(localStorage.getItem("customer_data") || "{}");
+
   const [formData, setFormData] = useState({
     first_name: "",
     last_name: "",
@@ -44,7 +50,7 @@ const ClientProfil = () => {
 
   const fetchStats = async () => {
     try {
-      const response = await clientProfileService.getStatistiques();
+      const response = await api.get("/profile/statistics/");
       setStats(response.data);
     } catch (error) {
       console.error("Erreur lors du chargement des statistiques:", error);
@@ -63,16 +69,17 @@ const ClientProfil = () => {
     setLoading(true);
 
     try {
-      await clientProfileService.updateProfile(formData);
+      await api.put("/profile/update_profile/", formData);
       setAlert({
         type: "success",
         message: "Votre profil a été mis à jour avec succès",
       });
       setIsEditing(false);
 
-      // Mettre à jour les données locales
+      // Mettre à jour localStorage
       const updatedClient = { ...client, ...formData };
-      localStorage.setItem("client_data", JSON.stringify(updatedClient));
+      localStorage.setItem("customer_data", JSON.stringify(updatedClient));
+      setCustomers(updatedClient);
     } catch (error) {
       setAlert({
         type: "error",

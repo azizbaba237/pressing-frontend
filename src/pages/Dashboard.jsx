@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import MainLayout from "../components/layout/MainLayout";
-import { commandeService } from "../services/api";
+import { orderService } from "../services/orderService"; // ✅ Changé ici
 import Loader from "../components/common/Loader";
 import {
   FaShoppingCart,
@@ -34,7 +34,7 @@ const Dashboard = () => {
 
   const fetchStatistiques = async () => {
     try {
-      const response = await commandeService.getStatistiques();
+      const response = await orderService.getStatistics(); // ✅ Utilise orderService
       setStats(response.data);
     } catch (error) {
       console.error("Erreur lors du chargement des statistiques:", error);
@@ -72,8 +72,7 @@ const Dashboard = () => {
     },
     {
       title: "CA 30 derniers jours",
-      // Séparer la valeur et l'unité pour un affichage mobile propre
-      value: (stats?.orders_last_30_days || 0).toLocaleString(),
+      value: (stats?.revenue_last_30_days || 0).toLocaleString(), // ✅ Corrigé
       unit: "FCFA",
       icon: <FaMoneyBillWave />,
       color: "bg-yellow-500",
@@ -119,9 +118,8 @@ const Dashboard = () => {
           {statCards.map((card, index) => (
             <div
               key={index}
-              className="card hover:shadow-lg transition-shadow p-3! sm:p-5!"
+              className="card hover:shadow-lg transition-shadow p-3 sm:p-5"
             >
-              {/* Icône en haut */}
               <div
                 className={`inline-flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 lg:w-16 lg:h-16 rounded-xl ${card.bgLight} mb-3`}
               >
@@ -132,12 +130,10 @@ const Dashboard = () => {
                 </span>
               </div>
 
-              {/* Titre */}
               <p className="text-xs sm:text-sm text-gray-500 leading-tight mb-1">
                 {card.title}
               </p>
 
-              {/* Valeur + unité sur deux lignes si nécessaire */}
               <p
                 className={`text-lg sm:text-2xl font-bold ${card.textColor} leading-tight`}
               >
@@ -158,13 +154,12 @@ const Dashboard = () => {
         {hasChartData ? (
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 sm:gap-6">
             {/* Pie Chart */}
-            <div className="card p-4! sm:p-6!">
+            <div className="card p-4 sm:p-6">
               <h3 className="text-sm sm:text-base font-semibold text-gray-900 mb-4">
                 Répartition par statut
               </h3>
-              {/* Hauteur réduite sur mobile */}
-              <div style={{ height: "260px" }}>
-                <ResponsiveContainer width="100%" height="100%">
+              <div style={{ height: "260px", minWidth: 0 }}>
+                <ResponsiveContainer width="100%" height="100%" >
                   <PieChart>
                     <Pie
                       data={statutData}
@@ -172,7 +167,7 @@ const Dashboard = () => {
                       cy="40%"
                       labelLine={false}
                       label={false}
-                      outerRadius="65%"
+                      outerRadius={80}
                       dataKey="value"
                     >
                       {statutData.map((entry, index) => (
@@ -215,11 +210,11 @@ const Dashboard = () => {
             </div>
 
             {/* Bar Chart */}
-            <div className="card p-4! sm:p-6!">
+            <div className="card p-4 sm:p-6">
               <h3 className="text-sm sm:text-base font-semibold text-gray-900 mb-4">
                 Commandes par statut
               </h3>
-              <div style={{ height: "260px" }}>
+              <div style={{ height: "260px", minWidth: 0  }}>
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart
                     data={statutData}
@@ -263,7 +258,7 @@ const Dashboard = () => {
         )}
 
         {/* État des commandes */}
-        <div className="card p-4! sm:p-6!">
+        <div className="card p-4 sm:p-6">
           <h3 className="text-sm sm:text-base font-semibold text-gray-900 mb-3 sm:mb-4">
             État des commandes
           </h3>
@@ -319,7 +314,6 @@ const Dashboard = () => {
   );
 };
 
-/* StatutCard redesignée : centrée, compacte, lisible sur mobile */
 const StatutCard = ({ label, count, icon, color, bgColor, borderColor }) => (
   <div
     className={`${bgColor} border ${borderColor} rounded-xl p-3 sm:p-4 flex flex-col items-center text-center gap-1`}

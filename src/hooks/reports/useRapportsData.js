@@ -1,9 +1,11 @@
 import { useState } from "react";
-import {
-    commandeService,
-    clientService,
-    paiementService,
-} from "../../services/api";
+import { orderService, customerService, paymentService } from '../../services/orderService';
+
+// import {
+//     commandeService,
+//     clientService,
+//     paiementService,
+// } from "../../services/api";
 
 /**
  * Hook personnalisé pour gérer les données des rapports
@@ -21,10 +23,10 @@ export const useRapportsData = ({ showAlert }) => {
 
             const [statsRes, ordersRes, paymentsRes, customersRes] =
                 await Promise.all([
-                    commandeService.getStatistiques(),
-                    commandeService.getAll({ ordering: "-deposit_date" }),
-                    paiementService.getAll({ ordering: "-payment_date" }),
-                    clientService.getAll({ ordering: "-inscription_date" }),
+                    orderService.getStatistics(),
+                    orderService.getAll({ ordering: "-deposit_date" }),
+                    paymentService.getAll({ ordering: "-payment_date" }),
+                    customerService.getAll({ ordering: "-inscription_date" }),
                 ]);
 
             setStats(statsRes.data);

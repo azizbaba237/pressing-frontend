@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ClientLayout from "../../components/layout/ClientLayout";
-import { clientProfileService } from "../../services/clientApi";
+//import { clientProfileService } from "../../services/clientApi";
+import api from '../../services/api';
 import Loader from "../../components/common/Loader";
 import Alert from "../../components/common/Alert";
 import Modal from "../../components/common/Modal";
@@ -63,7 +64,8 @@ const ClientCommandes = () => {
   const fetchCommandes = async () => {
     try {
       setLoading(true);
-      const response = await clientProfileService.getMesCommandes();
+      // ✅ CORRECTION
+      const response = await api.get('/profile/my_orders/');
       setOrders(response.data);
     } catch (error) {
       setAlert({

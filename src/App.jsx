@@ -5,13 +5,12 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import { AuthProvider } from "./contexts/AuthContext";
-import { ClientAuthProvider } from "./contexts/ClientAuthContext";
 import PrivateRoute from "./utils/PrivateRoute";
-import ClientPrivateRoute from "./utils/clients/ClientPrivateRoute";
+import { UnifiedAuthProvider } from "./contexts/UnifiedAuthContext";
 
 // Pages
-import Login from "./pages/Login";
+import UnifiedLogin from "./pages/UnifiedLogin";
+import UnifiedRegister from "./pages/UnifiedRegister";
 import Dashboard from "./pages/Dashboard";
 import Clients from "./pages/Clients";
 import Commandes from "./pages/Commandes";
@@ -22,8 +21,6 @@ import Parametres from "./pages/Parametres";
 import NotFound from "./pages/NotFound";
 
 // Pages Client
-import ClientLogin from "./pages/client/ClientLogin";
-import ClientRegister from "./pages/client/ClientRegister";
 import ClientDashboard from "./pages/client/ClientDashboard";
 import ClientCommandes from "./pages/client/ClientCommandes";
 import ClientServices from "./pages/client/ClientServices";
@@ -35,143 +32,110 @@ import LandingPage from "./pages/LandingPage";
 
 function App() {
   return (
-    <AuthProvider>
-      <ClientAuthProvider>
-        <Router>
-          <Routes>
-            {/* Landing Page */}
-            <Route path="/" element={<LandingPage />} />
+    <UnifiedAuthProvider>
+      <Router>
+        <Routes>
+          {/* Landing Page */}
+          <Route path="/" element={<LandingPage />} />
 
-            {/* Routes Admin - Authentification */}
-            <Route path="/admin/login" element={<Login />} />
+          {/* Authentification */}
+          <Route path="/login" element={<UnifiedLogin />} />
+          <Route path="/register" element={<UnifiedRegister />} />
 
-            {/* Routes Admin - Protégées */}
-            <Route
-              path="/admin/dashboard"
-              element={
-                <PrivateRoute>
-                  <Dashboard />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path="/admin/clients"
-              element={
-                <PrivateRoute>
-                  <Clients />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path="/admin/commandes"
-              element={
-                <PrivateRoute>
-                  <Commandes />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path="/admin/services"
-              element={
-                <PrivateRoute>
-                  <Services />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path="/admin/paiements"
-              element={
-                <PrivateRoute>
-                  <Paiements />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path="/admin/rapports"
-              element={
-                <PrivateRoute>
-                  <Rapports />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path="/admin/parametres"
-              element={
-                <PrivateRoute>
-                  <Parametres />
-                </PrivateRoute>
-              }
-            />
+          {/* Routes Admin - Protégées */}
+          <Route
+            path="/admin/dashboard"
+            element={
+              <PrivateRoute requiredRole="ADMIN">
+                <Dashboard />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/admin/clients"
+            element={
+              <PrivateRoute requiredRole="ADMIN">
+                <Clients />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/admin/commandes"
+            element={
+              <PrivateRoute requiredRole="ADMIN">
+                <Commandes />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/admin/services"
+            element={
+              <PrivateRoute requiredRole="ADMIN">
+                <Services />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/admin/paiements"
+            element={
+              <PrivateRoute requiredRole="ADMIN">
+                <Paiements />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/admin/rapports"
+            element={
+              <PrivateRoute requiredRole="ADMIN">
+                <Rapports />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/admin/parametres"
+            element={
+              <PrivateRoute requiredRole="ADMIN">
+                <Parametres />
+              </PrivateRoute>
+            }
+          />
 
-            {/* Routes Client - Publiques */}
-            <Route path="/client/login" element={<ClientLogin />} />
-            <Route path="/client/register" element={<ClientRegister />} />
-            <Route path="/client/services" element={<ClientServices />} />
-            <Route path="/client/contact" element={<ClientContact />} />
+          {/* Routes Client - Publiques */}
+          <Route path="/client/services" element={<ClientServices />} />
+          <Route path="/client/contact" element={<ClientContact />} />
 
-            {/* Routes Client - Protégées */}
-            <Route
-              path="/client/dashboard"
-              element={
-                <ClientPrivateRoute>
-                  <ClientDashboard />
-                </ClientPrivateRoute>
-              }
-            />
-            <Route
-              path="/client/commandes"
-              element={
-                <ClientPrivateRoute>
-                  <ClientCommandes />
-                </ClientPrivateRoute>
-              }
-            />
-            <Route
-              path="/client/profil"
-              element={
-                <ClientPrivateRoute>
-                  <ClientProfil />
-                </ClientPrivateRoute>
-              }
-            />
+          {/* Routes Client - Protégées */}
+          <Route
+            path="/client/dashboard"
+            element={
+              <PrivateRoute requiredRole="CUSTOMER">
+                <ClientDashboard />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/client/commandes"
+            element={
+              <PrivateRoute requiredRole="CUSTOMER">
+                <ClientCommandes />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/client/profil"
+            element={
+              <PrivateRoute requiredRole="CUSTOMER">
+                <ClientProfil />
+              </PrivateRoute>
+            }
+          />
 
-            {/* Redirections pour compatibilité */}
-            <Route
-              path="/login"
-              element={<Navigate to="/admin/login" replace />}
-            />
-            <Route
-              path="/clients"
-              element={<Navigate to="/admin/clients" replace />}
-            />
-            <Route
-              path="/commandes"
-              element={<Navigate to="/admin/commandes" replace />}
-            />
-            <Route
-              path="/services"
-              element={<Navigate to="/admin/services" replace />}
-            />
-            <Route
-              path="/paiements"
-              element={<Navigate to="/admin/paiements" replace />}
-            />
-            <Route
-              path="/rapports"
-              element={<Navigate to="/admin/rapports" replace />}
-            />
-            <Route
-              path="/parametres"
-              element={<Navigate to="/admin/parametres" replace />}
-            />
-
-            {/* Route 404 */}
-            <Route path="/404" element={<NotFound />} />
-            <Route path="*" element={<Navigate to="/404" replace />} />
-          </Routes>
-        </Router>
-      </ClientAuthProvider>
-    </AuthProvider>
+          {/* Route 404 */}
+          <Route path="/404" element={<NotFound />} />
+          <Route path="*" element={<Navigate to="/404" replace />} />
+        </Routes>
+      </Router>
+    </UnifiedAuthProvider>
   );
 }
 

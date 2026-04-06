@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { clientService } from "../../services/api";
+import { customerService } from "../../services/orderService.jsx";
 import {
     DEFAULT_FORM_DATA,
     SUCCESS_MESSAGES,
@@ -41,10 +41,10 @@ export const useClientForm = ({
             const cleanData = sanitizeFormData(formData);
 
             if (selectedClient) {
-                await clientService.update(selectedClient.id, cleanData);
+                await customerService.update(selectedClient.id, cleanData);
                 showAlert("success", SUCCESS_MESSAGES.updated);
             } else {
-                await clientService.create(cleanData);
+                await customerService.create(cleanData);
                 showAlert("success", SUCCESS_MESSAGES.created);
             }
 

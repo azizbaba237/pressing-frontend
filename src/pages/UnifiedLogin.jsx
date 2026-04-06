@@ -1,26 +1,27 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useUnifiedAuth } from '../../contexts/UnifiedAuthContext'
-import Alert from "../../components/common/Alert";
-import { FaUser, FaLock, FaSpinner, FaArrowLeft } from "react-icons/fa";
+import React, { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { useUnifiedAuth } from '../contexts/UnifiedAuthContext';
+import Alert from '../components/common/Alert';
+import { FaUser, FaLock, FaSpinner, FaArrowLeft } from 'react-icons/fa';
 
-const ClientLogin = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+const UnifiedLogin = () => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const { login } = useUnifiedAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
+    setError('');
     setLoading(true);
 
     const result = await login(username, password);
 
     if (result.success) {
-      navigate("/client/dashboard", { replace: true });
+      // Redirection automatique selon le rôle
+      navigate(result.redirect);
     } else {
       setError(result.error);
     }
@@ -45,33 +46,22 @@ const ClientLogin = () => {
           {/* Header */}
           <div className="bg-linear-to-r from-blue-600 to-purple-600 px-8 py-10 text-center">
             <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-              <span className="text-4xl font-bold bg-li-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              <span className="text-4xl font-bold bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                 P
               </span>
             </div>
-            <h2 className="text-3xl font-extrabold text-white">
-              Espace Client
-            </h2>
-            <p className="mt-2 text-blue-100">Connectez-vous à votre compte</p>
+            <h2 className="text-3xl font-extrabold text-white">Pressing Pro</h2>
+            <p className="mt-2 text-blue-100">Connexion à votre espace</p>
           </div>
 
           {/* Form */}
           <div className="px-8 py-8">
-            {error && (
-              <Alert
-                type="error"
-                message={error}
-                onClose={() => setError("")}
-              />
-            )}
+            {error && <Alert type="error" message={error} onClose={() => setError('')} />}
 
             <form className="space-y-6" onSubmit={handleSubmit}>
               <div>
-                <label
-                  htmlFor="username"
-                  className="block text-sm font-medium text-gray-700 mb-2"
-                >
-                  Téléphone ou Email
+                <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-2">
+                  Nom d'utilisateur ou Téléphone
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -84,17 +74,14 @@ const ClientLogin = () => {
                     required
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
-                    className="input-field pl-10! "
-                    placeholder="Votre téléphone ou email"
+                    className="input-field pl-10!"
+                    placeholder="Votre identifiant"
                   />
                 </div>
               </div>
 
               <div>
-                <label
-                  htmlFor="password"
-                  className="block text-sm font-medium text-gray-700 mb-2"
-                >
+                <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
                   Mot de passe
                 </label>
                 <div className="relative">
@@ -126,18 +113,28 @@ const ClientLogin = () => {
                       Connexion...
                     </>
                   ) : (
-                    "Se connecter"
+                    'Se connecter'
                   )}
                 </button>
               </div>
             </form>
 
+            {/* Info Box */}
+            <div className="mt-6 bg-linear-to-r from-blue-50 to-purple-50 rounded-lg p-4">
+              <p className="text-sm text-gray-700 text-center">
+                <strong>Clients :</strong> Connectez-vous avec votre téléphone ou nom d'utilisateur
+              </p>
+              <p className="text-sm text-gray-700 text-center mt-2">
+                <strong>Administrateurs :</strong> Utilisez vos identifiants admin
+              </p>
+            </div>
+
             {/* Register Link */}
             <div className="mt-6 text-center">
               <p className="text-sm text-gray-600">
-                Pas encore de compte ?{" "}
+                Nouveau client ?{' '}
                 <Link
-                  to="/client/register"
+                  to="/register"
                   className="font-semibold text-blue-600 hover:text-blue-700"
                 >
                   Créer un compte
@@ -153,7 +150,7 @@ const ClientLogin = () => {
             <Link to="/client/services" className="hover:underline">
               Voir nos services
             </Link>
-            {" • "}
+            {' • '}
             <Link to="/client/contact" className="hover:underline">
               Nous contacter
             </Link>
@@ -164,4 +161,4 @@ const ClientLogin = () => {
   );
 };
 
-export default ClientLogin;
+export default UnifiedLogin;

@@ -24,7 +24,10 @@ const ClientActions = ({ client, onView, onEdit, onDelete }) => {
         <FaEdit />
       </button>
       <button
-        onClick={(e) => handleClick(e, onDelete)}
+        onClick={(e) => {
+          e.stopPropagation();
+          onDelete(client.id); // ✅ onDelete reçoit seulement l'id
+        }}
         className="text-red-600 hover:text-red-800 transition-colors"
         title="Supprimer"
       >

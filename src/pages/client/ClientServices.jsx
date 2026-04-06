@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import ClientLayout from "../../components/layout/ClientLayout";
-import {
-  publicServiceService,
-  publicCategorieService,
-} from "../../services/clientApi";
+// import {
+//   publicServiceService,
+//   publicCategorieService,
+// } from "../../services/clientApi";
+import api from "../../services/api";
 import Loader from "../../components/common/Loader";
 import Alert from "../../components/common/Alert";
 import {
@@ -36,8 +37,8 @@ const ClientServices = () => {
     try {
       setLoading(true);
       const [servicesRes, categoriesRes] = await Promise.all([
-        publicServiceService.getAll(),
-        publicCategorieService.getAll(),
+        api.get("/public/services/"),
+        api.get("/public/categories/"),
       ]);
 
       setServices(servicesRes.data.results || servicesRes.data);

@@ -100,7 +100,7 @@ const LandingPage = () => {
                 Contact
               </a>
               <Link
-                to="/client/login"
+                to="/login"
                 className="bg-linear-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all"
               >
                 Connexion
@@ -108,7 +108,7 @@ const LandingPage = () => {
             </div>
             <div className="md:hidden flex items-center">
               <Link
-                to="/client/login"
+                to="/login"
                 className="bg-linear-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-lg font-semibold text-sm"
               >
                 Connexion
@@ -133,14 +133,14 @@ const LandingPage = () => {
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link
-                  to="/client/register"
+                  to="/register"
                   className="inline-flex items-center justify-center space-x-2 bg-white text-purple-600 px-8 py-4 rounded-xl font-bold hover:bg-gray-100 transition-all transform hover:scale-105 shadow-xl"
                 >
                   <span>Créer un compte</span>
                   <FaArrowRight />
                 </Link>
                 <Link
-                  to="/client/services"
+                  to="/services"
                   className="inline-flex items-center justify-center space-x-2 border-2 border-white px-8 py-4 rounded-xl font-bold hover:bg-white hover:text-purple-600 transition-all"
                 >
                   Voir nos services

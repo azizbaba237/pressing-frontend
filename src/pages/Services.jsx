@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import MainLayout from "../components/layout/MainLayout";
-// import { serviceService, categorieService } from "../services/api";
 import Alert from "../components/common/Alert";
 import ServicesHeader from "../components/services/Servicesheader";
 import ServicesFilters from "../components/services/Servicesfilters";

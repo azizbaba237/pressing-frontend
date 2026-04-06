@@ -13,15 +13,14 @@ import {
 
 const Sidebar = ({ isOpen, onClose }) => {
   const menuItems = [
-    { name: "Tableau de bord", path: "/", icon: <FaHome /> },
-    { name: "Clients", path: "/clients", icon: <FaUsers /> },
-    { name: "Commandes", path: "/commandes", icon: <FaShoppingCart /> },
-    { name: "Services", path: "/services", icon: <FaTags /> },
-    { name: "Paiements", path: "/paiements", icon: <FaMoneyBillWave /> },
-    { name: "Rapports", path: "/rapports", icon: <FaChartBar /> },
-    { name: "Paramètres", path: "/parametres", icon: <FaCog /> },
+    { name: "Tableau de bord", path: "/admin/dashboard", icon: <FaHome /> },
+    { name: "Clients", path: "/admin/clients", icon: <FaUsers /> },
+    { name: "Commandes", path: "/admin/commandes", icon: <FaShoppingCart /> },
+    { name: "Services", path: "/admin/services", icon: <FaTags /> },
+    { name: "Paiements", path: "/admin/paiements", icon: <FaMoneyBillWave /> },
+    { name: "Rapports", path: "/admin/rapports", icon: <FaChartBar /> },
+    { name: "Paramètres", path: "/admin/parametres", icon: <FaCog /> },
   ];
-
   return (
     <>
       {/* Overlay sombre — mobile uniquement quand menu ouvert */}
@@ -66,7 +65,7 @@ const Sidebar = ({ isOpen, onClose }) => {
                 <NavLink
                   to={item.path}
                   onClick={onClose} // Ferme le menu sur mobile après navigation
-                  end={item.path === "/"}
+                  end={item.path === "/admin/dashboard"}
                   className={({ isActive }) =>
                     `flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors text-sm ${
                       isActive

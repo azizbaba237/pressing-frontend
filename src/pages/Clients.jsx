@@ -1,40 +1,62 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import MainLayout from "../components/layout/MainLayout";
+import { customerService } from "../services/orderService";
 import Alert from "../components/common/Alert";
 import ClientsHeader from "../components/clients/ClientsHeader";
 import ClientsSearch from "../components/clients/ClientsSearch";
 import ClientsTable from "../components/clients/ClientsTable";
 import ClientFormModal from "../components/clients/ClientFormModal";
 import ClientDetailsModal from "../components/clients/ClientDetailsModal";
-import { useClientsData } from "../hooks/clients/useClientsData";
 import { useClientForm } from "../hooks/clients/useClientForm";
 import { useAlert } from "../hooks/useAlert";
 
-/**
- * Page principale de gestion des clients
- *
- * Responsabilités :
- * - Orchestration des composants
- * - Gestion des modales
- * - Coordination entre les hooks
- */
 const Clients = () => {
   const [showModal, setShowModal] = useState(false);
   const [showDetailModal, setShowDetailModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [clients, setClients] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [selectedClient, setSelectedClient] = useState(null);
+  const [clientStats, setClientStats] = useState(null);
 
   const { alert, showAlert, closeAlert } = useAlert();
 
-  const {
-    clients,
-    loading,
-    selectedClient,
-    clientStats,
-    setSelectedClient,
-    fetchClients,
-    fetchClientStats,
-    handleDelete,
-  } = useClientsData({ searchTerm, showAlert });
+  const fetchClients = async () => {
+    setLoading(true);
+    try {
+      const res = await customerService.getAll({ search: searchTerm });
+      setClients(res.data);
+    } catch (error) {
+      showAlert(error, "Erreur lors du chargement des clients");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchClientStats = async (id) => {
+    try {
+      const res = await customerService.getStatistics(id);
+      setClientStats(res.data);
+    } catch (err) {
+      console.error("Erreur stats client:", err);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    if (!window.confirm("Supprimer ce client ?")) return;
+    try {
+      await customerService.delete(id);
+      showAlert("success", "Client supprimé avec succès");
+      fetchClients();
+    } catch (err) {
+      showAlert(err, "Erreur lors de la suppression");
+    }
+  };
+
+  // ✅ Recharge quand searchTerm change
+  useEffect(() => {
+    fetchClients();
+  }, [searchTerm]);
 
   const { formData, handleChange, handleSubmit, handleEdit, resetForm } =
     useClientForm({

@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../../contexts/AuthContext";
+//import { useAuth } from "../../contexts/AuthContext";
+import { useUnifiedAuth } from'../../contexts/UnifiedAuthContext';
 import { FaUser, FaSignOutAlt, FaBars } from "react-icons/fa";
 
 const Navbar = ({ onMenuToggle }) => {
-  const { user, logout } = useAuth();
+  //const { user, logout } = useAuth();
+  const { user, logout } = useUnifiedAuth();
+  
   const navigate = useNavigate();
   const [showUserMenu, setShowUserMenu] = useState(false);
 
